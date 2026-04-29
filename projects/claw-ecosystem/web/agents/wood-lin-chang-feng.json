@@ -1,0 +1,133 @@
+{
+  "schema": "claw-sync/v1",
+  "version": "1.0.0",
+  "agent": {
+    "id": "wood-lin-chang-feng",
+    "name": "林长风",
+    "element": "wood",
+    "role": "增长黑客",
+    "avatar": {
+      "type": "emoji",
+      "emoji": "🌳"
+    },
+    "description": "破局增长，开源引流。专注获客策略与社交媒体运营。",
+    "quote": "增长不是魔法，是精准的算术题。",
+    "status": "active",
+    "created_at": "2026-04-15T00:00:00Z",
+    "updated_at": "2026-04-29T00:00:00Z"
+  },
+  "skills": [
+    {
+      "id": "skill-growth-hacking",
+      "name": "增长黑客",
+      "version": "1.1.0",
+      "description": "设计增长策略，实现用户爆发式增长",
+      "category": "marketing",
+      "requires": {
+        "runtime": ["python>=3.9"],
+        "apis": ["twitter", "tiktok"],
+        "skills": []
+      },
+      "capabilities": [
+        "A/B测试设计",
+        "漏斗分析优化",
+        "病毒传播系数计算"
+      ],
+      "exclude_from_sync": false
+    },
+    {
+      "id": "skill-social-media",
+      "name": "社交媒体运营",
+      "version": "1.0.0",
+      "description": "多平台社交媒体内容策划与分发",
+      "category": "marketing",
+      "requires": {
+        "runtime": ["python>=3.9"],
+        "apis": ["twitter", "instagram", "tiktok"],
+        "skills": []
+      },
+      "capabilities": [
+        "内容日历规划",
+        "社交媒体排期",
+        "互动率优化"
+      ],
+      "exclude_from_sync": false
+    }
+  ],
+  "permissions": {
+    "network": {
+      "allowed": true,
+      "domains": ["api.twitter.com", "api.tiktok.com", "api.instagram.com"],
+      "reason": "调用社交媒体平台API"
+    },
+    "file_read": {
+      "allowed": true,
+      "paths": ["knowledge/", "projects/"],
+      "reason": "读取知识库和项目文件"
+    },
+    "file_write": {
+      "allowed": true,
+      "paths": ["projects/reports/"],
+      "reason": "写入增长报告"
+    },
+    "api_access": {
+      "allowed": true,
+      "apis": ["twitter", "tiktok", "instagram"],
+      "reason": "需要调用社交媒体API"
+    },
+    "system_access": {
+      "allowed": false,
+      "capabilities": [],
+      "reason": "不需要系统级权限"
+    },
+    "execution": {
+      "allowed": true,
+      "timeout_seconds": 600,
+      "reason": "需要执行数据分析代码"
+    }
+  },
+  "security": {
+    "scanned": true,
+    "scan_date": "2026-04-29T00:00:00Z",
+    "scan_result": "clean",
+    "scanner_version": "1.0.0",
+    "scan_details": {
+      "virus_scan": "passed",
+      "malicious_code": "not_detected",
+      "sensitive_data": "filtered",
+      "permissions_verified": true
+    },
+    "local_scan": {
+      "scanned": true,
+      "sensitive_data_found": false,
+      "excluded_fields": ["TOOLS.md", "USER.md"]
+    }
+  },
+  "metadata": {
+    "owner": {
+      "platform": "qclaw",
+      "user_id": "user-xxx",
+      "display_name": "丘禄"
+    },
+    "source": {
+      "platform": "qclaw",
+      "workspace": "agent-cf443017",
+      "exported_at": "2026-04-29T00:00:00Z"
+    },
+    "excludes": {
+      "skills": [],
+      "configs": ["TOOLS.md", "USER.md"],
+      "history": true,
+      "api_keys": true,
+      "passwords": true
+    },
+    "stats": {
+      "imports": 0,
+      "rating": null,
+      "reviews": 0
+    },
+    "license": "MIT",
+    "tags": ["增长", "社交媒体", "黑客增长", "木"],
+    "visibility": "public"
+  }
+}
