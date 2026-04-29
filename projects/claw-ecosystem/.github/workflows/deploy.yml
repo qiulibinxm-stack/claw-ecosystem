@@ -1,0 +1,80 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Validate paths exist
+        run: |
+          echo "=== Checking required files ==="
+          test -f index.html && echo "✅ index.html found" || (echo "❌ index.html NOT found" && exit 1)
+          test -d agents && echo "✅ agents/ found" || (echo "❌ agents/ NOT found" && exit 1)
+          test -d assets && echo "✅ assets/ found" || (echo "❌ assets/ NOT found" && exit 1)
+
+      - name: Scan for sensitive data (安全扫描)
+        run: |
+          echo "=== 敏感数据扫描 ==="
+          FOUND=0
+          for f in $(find . -name "*.json" -o -name "*.md" 2>/dev/null | grep -v node_modules); do
+            if grep -iq "api.key\|secret\|password\|token" "$f" 2>/dev/null; then
+              echo "⚠️  Warning: $f contains potential sensitive data"
+              FOUND=1
+            fi
+          done
+          if [ $FOUND -eq 0 ]; then
+            echo "✅ No sensitive data detected"
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+          # 只上传必需的静态文件，排除 node_modules 和 .git
+          include: |
+            "index.html"
+            "design-prototype.html"
+            "agents/"
+            "assets/"
+            "public/"
+          exclude: |
+            "node_modules/"
+            ".git/"
+            "src/"
+            "*.config.*"
+            "package*.json"
+            "tsconfig*.json"
+            ".eslint*"
+            ".github/"
+            "README.md"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Output URL
+        run: echo "🚀 Deployed to ${{ steps.deployment.outputs.page_url }}"
