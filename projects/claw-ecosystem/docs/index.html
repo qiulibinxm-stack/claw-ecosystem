@@ -239,6 +239,94 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+        
+        /* 克唠浮动助手样式 */
+        .kela-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        
+        .kela-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: white;
+            overflow: hidden;
+            border: 3px solid #E86A4A;
+        }
+        
+        .kela-avatar:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(232,106,74,0.4);
+        }
+        
+        .kela-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .kela-bubble {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px 20px 5px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            max-width: 250px;
+            font-size: 0.95rem;
+            color: #333;
+            position: relative;
+            animation: bubblePop 0.3s ease-out;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        @keyframes bubblePop {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .kela-close {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .kela-close:hover {
+            color: #333;
+        }
+        
+        .kela-bubble.hidden {
+            display: none;
+        }
+        
+        /* 克唠表情包动画 */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .kela-avatar.bouncing {
+            animation: bounce 0.5s ease-in-out 2;
+        }
     </style>
 </head>
 <body>
@@ -262,6 +350,17 @@
         <div id="error" class="error" style="display:none;"></div>
         
         <div id="agents-grid" class="agents-grid" style="display:none;"></div>
+    </div>
+    
+    <!-- 克唠浮动助手 -->
+    <div id="kela-container" class="kela-container">
+        <div id="kela-bubble" class="kela-bubble">
+            <span id="kela-text">你好！我是克唠，龙虾生态的向导！点击我换表情~</span>
+            <button class="kela-close" onclick="hideBubble()">×</button>
+        </div>
+        <div id="kela-avatar" class="kela-avatar" onclick="changeKelaExpression()">
+            <img src="assets/kela/开心版.png" alt="克唠" id="kela-img">
+        </div>
     </div>
     
     <div id="modal" class="modal">
@@ -448,8 +547,78 @@
             });
         });
         
+        // 克唠表情包配置
+        const kelaExpressions = [
+            { img: 'assets/kela/开心版.png', text: '你好！我是克唠，龙虾生态的向导！点击我换表情~' },
+            { img: 'assets/kela/思考版.png', text: '嗯...让我想想，今天推荐哪只虾给你呢？' },
+            { img: 'assets/kela/干活版.png', text: '加油！有问题随时找我，我24小时在线！' },
+            { img: 'assets/kela/摸鱼版.png', text: '嘘...我在摸鱼，别告诉老板！' }
+        ];
+        
+        let currentExpression = 0;
+        let bubbleTimeout;
+        
+        function changeKelaExpression() {
+            const avatar = document.getElementById('kela-avatar');
+            const img = document.getElementById('kela-img');
+            const bubble = document.getElementById('kela-bubble');
+            const text = document.getElementById('kela-text');
+            
+            // 添加弹跳动画
+            avatar.classList.add('bouncing');
+            setTimeout(() => avatar.classList.remove('bouncing'), 1000);
+            
+            // 切换表情
+            currentExpression = (currentExpression + 1) % kelaExpressions.length;
+            const expr = kelaExpressions[currentExpression];
+            
+            img.src = expr.img;
+            text.textContent = expr.text;
+            
+            // 显示气泡
+            bubble.classList.remove('hidden');
+            
+            // 3秒后自动隐藏气泡
+            clearTimeout(bubbleTimeout);
+            bubbleTimeout = setTimeout(() => {
+                bubble.classList.add('hidden');
+            }, 5000);
+        }
+        
+        function hideBubble() {
+            document.getElementById('kela-bubble').classList.add('hidden');
+            clearTimeout(bubbleTimeout);
+        }
+        
+        // 随机显示克唠提示
+        const kelaTips = [
+            '点击卡片查看虾的详细信息！',
+            '使用上方筛选器按五行属性查找~',
+            '每只虾都有独特的技能组合哦！',
+            '安全第一！所有虾都经过安全扫描~'
+        ];
+        
+        function showRandomTip() {
+            const bubble = document.getElementById('kela-bubble');
+            const text = document.getElementById('kela-text');
+            const tip = kelaTips[Math.floor(Math.random() * kelaTips.length)];
+            
+            text.textContent = '💡 ' + tip;
+            bubble.classList.remove('hidden');
+            
+            bubbleTimeout = setTimeout(() => {
+                bubble.classList.add('hidden');
+            }, 6000);
+        }
+        
         // 页面加载时执行
         loadAgents();
+        
+        // 10秒后显示第一个提示
+        setTimeout(showRandomTip, 10000);
+        
+        // 每30秒随机显示提示
+        setInterval(showRandomTip, 30000);
     </script>
 </body>
 </html>
