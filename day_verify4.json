@@ -1,0 +1,216 @@
+{
+  "日柱验证": [
+    {
+      "solar": "2001-09-11",
+      "cnlunar_day": "丁丑",
+      "manual_day": "丁丑",
+      "match": true,
+      "pos60": 13,
+      "days_from_anchor": 6433,
+      "cnlunar_lunar": "7月24"
+    },
+    {
+      "solar": "2001-09-10",
+      "cnlunar_day": "丙子",
+      "manual_day": "丙子",
+      "match": true,
+      "pos60": 12,
+      "days_from_anchor": 6432,
+      "cnlunar_lunar": "7月23"
+    },
+    {
+      "solar": "2001-09-12",
+      "cnlunar_day": "戊寅",
+      "manual_day": "戊寅",
+      "match": true,
+      "pos60": 14,
+      "days_from_anchor": 6434,
+      "cnlunar_lunar": "7月25"
+    },
+    {
+      "solar": "2000-09-11",
+      "cnlunar_day": "壬申",
+      "manual_day": "壬申",
+      "match": true,
+      "pos60": 8,
+      "days_from_anchor": 6068,
+      "cnlunar_lunar": "8月14"
+    },
+    {
+      "solar": "2001-09-03",
+      "cnlunar_day": "己巳",
+      "manual_day": "己巳",
+      "match": true,
+      "pos60": 5,
+      "days_from_anchor": 6425,
+      "cnlunar_lunar": "7月16"
+    }
+  ],
+  "节气边界": [
+    {
+      "solar": "2001-08-08",
+      "jieqi": "立秋",
+      "cnlunar_month": "丙申",
+      "cnlunar_year": "辛巳",
+      "manual_day": "癸卯"
+    },
+    {
+      "solar": "2001-08-23",
+      "jieqi": "处暑",
+      "cnlunar_month": "丙申",
+      "cnlunar_year": "辛巳",
+      "manual_day": "戊午"
+    },
+    {
+      "solar": "2001-09-08",
+      "jieqi": "白露",
+      "cnlunar_month": "丁酉",
+      "cnlunar_year": "辛巳",
+      "manual_day": "甲戌"
+    },
+    {
+      "solar": "2001-09-23",
+      "jieqi": "秋分",
+      "cnlunar_month": "丁酉",
+      "cnlunar_year": "辛巳",
+      "manual_day": "己丑"
+    },
+    {
+      "solar": "2001-10-08",
+      "jieqi": "寒露",
+      "cnlunar_month": "戊戌",
+      "cnlunar_year": "辛巳",
+      "manual_day": "甲辰"
+    }
+  ],
+  "时柱验证": [
+    {
+      "day_gan": "甲",
+      "calc_hour": "甲子"
+    },
+    {
+      "day_gan": "乙",
+      "calc_hour": "丙子"
+    },
+    {
+      "day_gan": "丙",
+      "calc_hour": "戊子"
+    },
+    {
+      "day_gan": "丁",
+      "calc_hour": "庚子"
+    },
+    {
+      "day_gan": "戊",
+      "calc_hour": "壬子"
+    },
+    {
+      "day_gan": "己",
+      "calc_hour": "甲子"
+    },
+    {
+      "day_gan": "庚",
+      "calc_hour": "丙子"
+    },
+    {
+      "day_gan": "辛",
+      "calc_hour": "戊子"
+    },
+    {
+      "day_gan": "壬",
+      "calc_hour": "庚子"
+    },
+    {
+      "day_gan": "癸",
+      "calc_hour": "壬子"
+    }
+  ],
+  "cnlunar_时柱": [
+    {
+      "time": "23:00",
+      "day_gan": "戊",
+      "cnlunar_hour": "壬子",
+      "cnlunar_day": "戊寅"
+    },
+    {
+      "time": "23:30",
+      "day_gan": "戊",
+      "cnlunar_hour": "壬子",
+      "cnlunar_day": "戊寅"
+    },
+    {
+      "time": "00:00",
+      "day_gan": "丁",
+      "cnlunar_hour": "庚子",
+      "cnlunar_day": "丁丑"
+    },
+    {
+      "time": "00:30",
+      "day_gan": "丁",
+      "cnlunar_hour": "庚子",
+      "cnlunar_day": "丁丑"
+    },
+    {
+      "time": "01:00",
+      "day_gan": "丁",
+      "cnlunar_hour": "辛丑",
+      "cnlunar_day": "丁丑"
+    },
+    {
+      "time": "22:00",
+      "day_gan": "丁",
+      "cnlunar_hour": "辛亥",
+      "cnlunar_day": "丁丑"
+    }
+  ],
+  "2001年已知日柱对照": [
+    {
+      "solar": "2001-01-01",
+      "cnlunar": "甲子",
+      "manual": "甲子"
+    },
+    {
+      "solar": "2001-01-29",
+      "cnlunar": "壬辰",
+      "manual": "壬辰"
+    },
+    {
+      "solar": "2001-02-04",
+      "cnlunar": "戊戌",
+      "manual": "戊戌"
+    },
+    {
+      "solar": "2001-09-11",
+      "cnlunar": "丁丑",
+      "manual": "丁丑"
+    },
+    {
+      "solar": "2001-10-01",
+      "cnlunar": "丁酉",
+      "manual": "丁酉"
+    },
+    {
+      "solar": "2001-12-31",
+      "cnlunar": "戊辰",
+      "manual": "戊辰"
+    }
+  ],
+  "农历转公历验证": {
+    "农历2001年7月24日": {
+      "note": "七月二十四-脚本cnlunar",
+      "solar": "2001-09-11",
+      "cnlunar_day": "丁丑",
+      "manual_day": "丁丑",
+      "match": true,
+      "lunar_from_cnlunar": "7月24"
+    },
+    "农历2001年9月11日": {
+      "note": "九月十一日-农历九月",
+      "solar": "2001-10-27",
+      "cnlunar_day": "癸亥",
+      "manual_day": "癸亥",
+      "match": true,
+      "lunar_from_cnlunar": "9月11"
+    }
+  }
+}

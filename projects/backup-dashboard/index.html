@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五行备份系统 · 控制台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b0e17;--card:#141824;--border:rgba(255,255,255,.06);
+  --fire:#ff6b6b;--wood:#6bcb77;--water:#4d96ff;
+  --earth:#ffd93d;--metal:#9b59b6;--text:#e0e6f0;--muted:#6b7a99;
+}
+body{font-family:'Microsoft YaHei',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:24px}
+.wrap{max-width:1100px;margin:0 auto}
+
+/* ── Header ── */
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px}
+.header-left{display:flex;align-items:center;gap:16px}
+.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--fire),var(--earth));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.title h1{font-size:1.3rem;font-weight:700;color:#fff;line-height:1.2}
+.title p{font-size:.8rem;color:var(--muted);margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:5px;background:rgba(107,203,119,.12);border:1px solid rgba(107,203,119,.3);color:#6bcb77;font-size:.72rem;padding:4px 10px;border-radius:20px}
+.badge-dot{width:6px;height:6px;background:#6bcb77;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.status-chip{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);padding:8px 14px;border-radius:10px;font-size:.82rem}
+.status-chip .dot{width:8px;height:8px;border-radius:50%;background:#6bcb77}
+.status-chip .dot.warn{background:#ffd93d}
+.status-chip .dot.error{background:#ff6b6b}
+
+/* ── 5E Grid ── */
+.ele-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.ele-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.ele-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;opacity:.8}
+.ele-card.fire::before{background:var(--fire)}.ele-card.wood::before{background:var(--wood)}
+.ele-card.water::before{background:var(--water)}.ele-card.earth::before{background:var(--earth)}
+.ele-card.metal::before{background:var(--metal)}
+.ele-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.ele-card.active{border-color:currentColor}
+.ele-card.fire.active{color:var(--fire);border-color:var(--fire);box-shadow:0 0 20px rgba(255,107,107,.2)}
+.ele-card.wood.active{color:var(--wood);border-color:var(--wood);box-shadow:0 0 20px rgba(107,203,119,.2)}
+.ele-card.water.active{color:var(--water);border-color:var(--water);box-shadow:0 0 20px rgba(77,150,255,.2)}
+.ele-card.earth.active{color:var(--earth);border-color:var(--earth);box-shadow:0 0 20px rgba(255,217,61,.2)}
+.ele-card.metal.active{color:var(--metal);border-color:var(--metal);box-shadow:0 0 20px rgba(155,89,182,.2)}
+.ele-icon{font-size:1.7rem;margin-bottom:4px}
+.ele-name{font-size:.78rem;color:var(--muted);margin-bottom:6px}
+.ele-count{font-size:1.2rem;font-weight:700;color:inherit}
+.ele-label{font-size:.68rem;opacity:.6}
+
+/* ── Cards ── */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+.card-title{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card-title .icon{font-size:1rem}
+
+/* ── Stats ── */
+.stat-row{display:flex;gap:12px;margin-bottom:10px}
+.stat{background:rgba(255,255,255,.03);border-radius:8px;padding:12px;flex:1;text-align:center}
+.stat-n{font-size:1.5rem;font-weight:700;color:#fff;line-height:1}
+.stat-l{font-size:.72rem;color:var(--muted);margin-top:4px}
+
+/* ── Progress ── */
+.prog-list{display:flex;flex-direction:column;gap:10px}
+.prog-item{display:flex;align-items:center;gap:10px}
+.prog-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.prog-name{flex:1;font-size:.85rem;color:var(--text)}
+.prog-bar{flex:2;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.prog-val{font-size:.78rem;color:var(--muted);min-width:40px;text-align:right}
+
+/* ── Timeline ── */
+.tl{position:relative;padding-left:20px}
+.tl::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:rgba(255,255,255,.07)}
+.tl-item{position:relative;margin-bottom:16px;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid var(--border)}
+.tl-item::before{content:'';position:absolute;left:-16px;top:14px;width:8px;height:8px;border-radius:50%;border:2px solid var(--card);background:var(--water)}
+.tl-item:first-child::before{background:#ffd93d;box-shadow:0 0 8px rgba(255,217,61,.5)}
+.tl-date{font-size:.72rem;color:var(--muted);margin-bottom:4px}
+.tl-desc{font-size:.85rem;color:var(--text);margin-bottom:2px}
+.tl-size{font-size:.72rem;color:var(--muted)}
+
+/* ── Buttons ── */
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:inherit}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-fire{background:linear-gradient(135deg,#ff6b6b,#ff9f43);color:#fff}
+.btn-fire:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,107,107,.4)}
+.btn-water{background:linear-gradient(135deg,#4d96ff,#667eea);color:#fff}
+.btn-water:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 16px rgba(77,150,255,.4)}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover:not(:disabled){background:rgba(255,255,255,.1)}
+
+/* ── Category bars ── */
+.cat-list{display:flex;flex-direction:column;gap:8px}
+.cat-item{display:flex;align-items:center;gap:8px;font-size:.85rem}
+.cat-color{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.cat-name{flex:1;color:var(--text)}
+.cat-num{color:var(--muted);font-size:.78rem}
+
+/* ── Log ── */
+.log-box{background:#0a0d14;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Consolas','Courier New',monospace;font-size:.78rem;color:#8be9a6;max-height:140px;overflow-y:auto;line-height:1.8}
+.log-box .err{color:#ff6b6b}
+.log-box .warn{color:#ffd93d}
+
+/* ── Toast ── */
+#toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border);padding:12px 18px;border-radius:10px;font-size:.85rem;display:none;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.4);transition:opacity .3s}
+#toast.ok{border-color:rgba(107,203,119,.4);color:#6bcb77}
+#toast.err{border-color:rgba(255,107,107,.4);color:#ff6b6b}
+
+/* ── Spinner ── */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}
+.btn.running .spin{display:inline-block}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .ele-grid{grid-template-columns:repeat(5,1fr)}
+  .grid-3{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">🛡️</div>
+      <div class="title">
+        <h1>五行备份系统</h1>
+        <p>控制台 · 全自动增量备份</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="status-chip">
+        <div class="dot" id="statusDot"></div>
+        <span id="statusText">系统正常</span>
+      </div>
+      <div class="badge"><div class="badge-dot"></div>定时备份已激活</div>
+    </div>
+  </div>
+
+  <!-- 5E Filter -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-title"><span class="icon">🔥🌳💧🏔️⚙️</span> 五行过滤器 — 点击筛选恢复范围</div>
+    <div class="ele-grid" id="eleGrid">
+      <div class="ele-card fire" data-filter="all" onclick="setFilter('all',this)">
+        <div class="ele-icon">🌐</div><div class="ele-name">全部</div><div class="ele-count" id="cntAll">—</div><div class="ele-label">文件</div>
+      </div>
+      <div class="ele-card wood" data-filter="workspace" onclick="setFilter('workspace',this)">
+        <div class="ele-icon">📁</div><div class="ele-name">木·工作区</div><div class="ele-count" id="cntWorkspace">—</div><div class="ele-label">文件</div>
+      </div>
+      <div class="ele-card water" data-filter="memory" onclick="setFilter('memory',this)">
+        <div class="ele-icon">🧠</div><div class="ele-name">水·记忆</div><div class="ele-count" id="cntMemory">—</div><div class="ele-label">文件</div>
+      </div>
+      <div class="ele-card earth" data-filter="agents" onclick="setFilter('agents',this)">
+        <div class="ele-icon">🤖</div><div class="ele-name">土·代理</div><div class="ele-count" id="cntAgents">—</div><div class="ele-label">文件</div>
+      </div>
+      <div class="ele-card metal" data-filter="skills" onclick="setFilter('skills',this)">
+        <div class="ele-icon">⚙️</div><div class="ele-name">金·技能</div><div class="ele-count" id="cntSkills">—</div><div class="ele-label">文件</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-fire" id="btnBackup" onclick="runBackup()">
+        <span class="spin"></span>⚡ 立即备份
+      </button>
+      <select id="restoreDate" style="padding:10px 14px;border-radius:10px;background:#141824;border:1px solid rgba(255,255,255,.06);color:#e0e6f0;font-size:.85rem;font-family:inherit;cursor:pointer">
+        <option value="">选择恢复日期...</option>
+      </select>
+      <button class="btn btn-water" id="btnRestore" onclick="runRestore()">
+        📥 恢复
+      </button>
+      <button class="btn btn-ghost" onclick="refreshStatus()">
+        🔄 刷新状态
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title"><span class="icon">📦</span> 备份统计</div>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-n" id="statTotal">2</div><div class="stat-l">总备份数</div></div>
+        <div class="stat"><div class="stat-n" id="statFiles">8</div><div class="stat-l">变更文件</div></div>
+        <div class="stat"><div class="stat-n" id="statSize">18.5</div><div class="stat-l">KB总计</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">🕐</span> 最新备份</div>
+      <div style="text-align:center;padding:10px 0">
+        <div style="font-size:2rem;margin-bottom:6px" id="latestEmoji">✅</div>
+        <div style="font-size:.95rem;font-weight:600" id="latestDate">2026-04-20</div>
+        <div style="font-size:.8rem;color:var(--muted)" id="latestTime">09:54</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:4px" id="latestDesc">增量备份 (其他=1)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">⏰</span> 定时任务</div>
+      <div class="prog-list" style="margin-top:4px">
+        <div class="prog-item">
+          <div class="prog-name">每日增量备份</div>
+          <div class="prog-bar"><div class="prog-fill" id="pb1" style="width:0%;background:var(--wood)"></div></div>
+          <div class="prog-val">21:00</div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-name">开源情报采集</div>
+          <div class="prog-bar"><div class="prog-fill" id="pb2" style="width:0%;background:var(--water)"></div></div>
+          <div class="prog-val">21:30</div>
+        </div>
+        <div style="margin-top:6px;font-size:.78rem;color:var(--muted)">
+          下次备份：<span id="nextBackup" style="color:var(--earth)">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Row -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">📜</span> 备份时间轴</div>
+      <div class="tl" id="tlContainer"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> 变更分类</div>
+      <div class="cat-list" id="catContainer"></div>
+    </div>
+  </div>
+
+  <!-- Log -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🖥️</span> 操作日志</div>
+    <div class="log-box" id="logBox"><span class="warn">[系统]</span> 面板加载完成，等待指令...</div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ── Data ──
+const TIMELINE = [
+  {date:"2026-04-20",time:"12:30",desc:"增量备份 (knowledge=6, memory=2, workspace=3, skills=1, 其他=21)",size:"131.1 KB",files:33,type:"daily"},
+  {date:"2026-04-19",time:"23:24",desc:"增量备份 (其他=7)",size:"0.01 MB",files:7,type:"daily"},
+];
+const CATS = [
+  {name:"其他",count:21,color:"#6b7a99"},
+  {name:"知识库",count:6,color:"#ffd93d"},
+  {name:"记忆",count:2,color:"#4d96ff"},
+  {name:"工作区",count:3,color:"#6bcb77"},
+  {name:"技能",count:1,color:"#9b59b6"},
+];
+const STATS = {total:2,files:40,size:"131.1"};
+
+// ── State ──
+let activeFilter = 'all';
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    updateNextBackup();
+    setFilter('all', document.querySelector('[data-filter="all"]'));
+    renderTimeline();
+    renderCats();
+    update5ECounts([]);
+    log('面板加载完毕（离线模式）🛡️', 'warn');
+    await fetchStatus();
+    log('五行备份面板启动完毕 🛡️');
+  } catch(e) {
+    log('⚠️ 初始化异常：' + e.message, 'err');
+    renderTimeline();
+    renderCats();
+  }
+});
+
+// ── Fetch from API ──
+async function fetchStatus() {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 3000);
+    const res = await fetch('/backup/status', { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || '获取状态失败');
+
+    STATS.total = data.total_backups;
+    STATS.files = data.total_files;
+    STATS.size = data.total_size_mb;
+
+    if (data.entries && data.entries.length > 0) {
+      TIMELINE.length = 0;
+      const COLORS = {knowledge:'#ffd93d',memory:'#4d96ff',workspace:'#6bcb77',skills:'#9b59b6',agents:'#ff6b6b',其他:'#6b7a99'};
+      CATS.length = 0;
+      data.entries.forEach(e => {
+        const time = new Date(e.created).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+        TIMELINE.push({date:e.date,time,desc:e.description,size:e.total_size_mb+' MB',files:e.changed_files,type:'daily'});
+        Object.entries(e.categories||{}).forEach(([k,v]) => {
+          const ex = CATS.find(c=>c.name===k);
+          if(ex) ex.count+=v; else CATS.push({name:k,count:v,color:COLORS[k]||'#6b7a99'});
+        });
+      });
+    }
+    renderTimeline();
+    renderCats();
+    update5ECounts(data.entries);
+    updateRestoreSelect(data.entries);
+    log('📡 数据已同步（来自API）', 'ok');
+  } catch(e) {
+    log('⚠️ API离线，使用本地缓存数据 (' + e.message + ')', 'warn');
+    // Still render with hardcoded data
+    renderTimeline();
+    renderCats();
+    update5ECounts([]);
+  }
+}
+
+function update5ECounts(entries) {
+  const counts = {all:0,workspace:0,memory:0,agents:0,skills:0};
+  (entries||[]).forEach(e => {
+    Object.entries(e.categories||{}).forEach(([k,v]) => {
+      counts.all += v;
+      if(k==='workspace') counts.workspace+=v;
+      else if(k==='memory') counts.memory+=v;
+      else if(k==='agents') counts.agents+=v;
+      else if(k==='skills'||k==='knowledge') counts.skills+=v;
+    });
+  });
+  document.getElementById('cntAll').textContent = counts.all;
+  document.getElementById('cntWorkspace').textContent = counts.workspace;
+  document.getElementById('cntMemory').textContent = counts.memory;
+  document.getElementById('cntAgents').textContent = counts.agents;
+  document.getElementById('cntSkills').textContent = counts.skills;
+}
+
+// ── 5E Filter ──
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.ele-card').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  log(`过滤器切换 → ${f === 'all' ? '全部' : f}`);
+}
+
+// ── Render Timeline ──
+function renderTimeline() {
+  const el = document.getElementById('tlContainer');
+  el.innerHTML = TIMELINE.map((t, i) => `
+    <div class="tl-item">
+      <div class="tl-date">${t.date} · ${t.time}</div>
+      <div class="tl-desc">${t.desc}</div>
+      <div class="tl-size">📦 ${t.files} 文件 · ${t.size}</div>
+    </div>
+  `).join('');
+
+  // Stats
+  const latest = TIMELINE[0];
+  document.getElementById('latestDate').textContent = latest.date;
+  document.getElementById('latestTime').textContent = latest.time;
+  document.getElementById('latestDesc').textContent = latest.desc;
+  document.getElementById('statTotal').textContent = STATS.total;
+  document.getElementById('statFiles').textContent = STATS.files;
+  document.getElementById('statSize').textContent = STATS.size;
+}
+
+// ── Render Categories ──
+function renderCats() {
+  const el = document.getElementById('catContainer');
+  const total = STATS.files || 1;
+  el.innerHTML = CATS.map(c => `
+    <div class="cat-item">
+      <div class="cat-color" style="background:${c.color}"></div>
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-num">${c.count} 个文件</div>
+    </div>
+    <div class="prog-bar" style="margin:-4px 0 4px 18px">
+      <div class="prog-fill" style="width:${Math.max((c.count/total*100),2).toFixed(0)}%;background:${c.color}"></div>
+    </div>
+  `).join('');
+}
+
+// ── Countdown to next backup ──
+function updateNextBackup() {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(21, 0, 0, 0);
+  if (now > target) target.setDate(target.getDate() + 1);
+  const diff = target - now;
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('nextBackup').textContent = `${h}小时${m}分钟后`;
+}
+
+// ── Log ──
+function log(msg, type='ok') {
+  const box = document.getElementById('logBox');
+  const time = new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const cls = type === 'err' ? 'err' : type === 'warn' ? 'warn' : '';
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="${cls}">[${time}]</span> ${msg}`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+// ── Toast ──
+function toast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = type;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+
+// ── Backup ──
+async function runBackup() {
+  const btn = document.getElementById('btnBackup');
+  btn.classList.add('running');
+  btn.disabled = true;
+  log('🚀 执行增量备份...', 'warn');
+  toast('备份启动中...', 'ok');
+
+  try {
+    const res = await fetch('http://localhost:8899/backup/run', {method:'POST'});
+    const data = await res.json();
+    if (data.success) {
+      log(`✅ 备份完成：${data.files} 个文件变更 · ${data.size_kb} KB`);
+      toast(`✅ 备份成功！${data.files} 个变更`, 'ok');
+      STATS.total++;
+      STATS.files += data.files;
+      renderTimeline();
+    } else {
+      log(`❌ 备份失败：${data.error}`, 'err');
+      toast(`❌ ${data.error}`, 'err');
+    }
+  } catch(e) {
+    // Offline fallback: simulate
+    log('⚠️ 服务未响应（本地模式），模拟备份流程');
+    await new Promise(r => setTimeout(r, 1200));
+    log('✅ 模拟备份完成（本地模式，不写入真实备份）', 'warn');
+    toast('⚠️ 本地模式，真实备份请等待21:00定时任务', 'warn');
+  }
+  btn.classList.remove('running');
+  btn.disabled = false;
+}
+
+// ── Restore Select ──
+function updateRestoreSelect(entries) {
+  const sel = document.getElementById('restoreDate');
+  sel.innerHTML = '<option value="">选择恢复日期...</option>';
+  (entries || []).forEach(e => {
+    const opt = document.createElement('option');
+    opt.value = e.date;
+    opt.textContent = `${e.date} (${e.changed_files} 文件, ${e.total_size_mb} MB)`;
+    sel.appendChild(opt);
+  });
+}
+
+// ── Restore ──
+async function runRestore() {
+  const sel = document.getElementById('restoreDate');
+  const date = sel.value;
+  if (!date) {
+    log('⚠️ 请先选择要恢复的日期', 'warn');
+    toast('⚠️ 请选择日期', 'warn');
+    return;
+  }
+
+  const btn = document.getElementById('btnRestore');
+  btn.disabled = true;
+  log(`📥 启动恢复流程 → ${date}...`, 'warn');
+  toast('正在恢复...', 'ok');
+
+  try {
+    const res = await fetch(`http://localhost:8899/backup/restore?date=${date}`, {method:'POST'});
+    const data = await res.json();
+    if (data.success) {
+      log(`✅ 恢复完成：已恢复到 ${date}，共 ${data.files} 个文件`, 'ok');
+      toast(`✅ 恢复成功！`, 'ok');
+    } else {
+      log(`❌ 恢复失败：${data.error}`, 'err');
+      toast(`❌ ${data.error}`, 'err');
+    }
+  } catch(e) {
+    log('⚠️ 服务未响应，恢复失败', 'err');
+    toast('⚠️ 恢复失败', 'err');
+  }
+  btn.disabled = false;
+}
+
+// ── Refresh ──
+async function refreshStatus() {
+  updateNextBackup();
+  await fetchStatus();
+  toast('已刷新', 'ok');
+}
+</script>
+</body>
+</html>

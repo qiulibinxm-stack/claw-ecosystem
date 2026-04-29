@@ -1,0 +1,20 @@
+{
+  "name": "session-logger",
+  "version": "1.0.0",
+  "description": "五行团队会话日志系统 - 解决 session_logs_missing 信号问题",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "report": "node -e \"const logger = require('./index.js'); console.log(JSON.stringify(logger.generateTeamReport(), null, 2))\""
+  },
+  "keywords": [
+    "logging",
+    "session",
+    "five-elements",
+    "monitoring",
+    "evolution"
+  ],
+  "author": "万能虾CEO",
+  "license": "MIT",
+  "dependencies": {}
+}

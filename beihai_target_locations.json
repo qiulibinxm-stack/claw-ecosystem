@@ -1,0 +1,212 @@
+[
+  {
+    "target_name": "和森中医馆",
+    "name": "和森全科中医馆",
+    "address": "湖南路金星花园B区127号",
+    "location": "109.139868,21.476124",
+    "pname": "广西壮族自治区",
+    "cityname": "北海市",
+    "adname": "海城区",
+    "type": "医疗保健服务;诊所;诊所",
+    "typecode": "090300",
+    "tel": "15777976633",
+    "reverse_info": {
+      "formatted_address": "广西壮族自治区北海市海城区驿马街道美佳口腔门诊部(湖南路店)",
+      "province": "广西壮族自治区",
+      "city": "北海市",
+      "district": "海城区",
+      "township": "驿马街道",
+      "neighborhood": [],
+      "street": "湖南路"
+    },
+    "around_pois_count": 10,
+    "around_pois_sample": [
+      {
+        "name": "和森全科中医馆",
+        "type": "医疗保健服务;诊所;诊所",
+        "distance": "0",
+        "location": "109.139868,21.476124"
+      },
+      {
+        "name": "飞龙文体批发(湖南路店)",
+        "type": "购物服务;文化用品店;文化用品店",
+        "distance": "10",
+        "location": "109.139965,21.476154"
+      },
+      {
+        "name": "好味齐靓粥湖南路店",
+        "type": "餐饮服务;中餐厅;中餐厅",
+        "distance": "13",
+        "location": "109.139998,21.476096"
+      }
+    ]
+  },
+  {
+    "target_name": "金葵文化城",
+    "name": "金葵文化城",
+    "address": "深港路北京市场",
+    "location": "109.125796,21.466047",
+    "pname": "广西壮族自治区",
+    "cityname": "北海市",
+    "adname": "海城区",
+    "type": "购物服务;文化用品店;文化用品店|商务住宅;商务住宅相关;商务住宅相关",
+    "typecode": "060800|120000",
+    "tel": "18977941228",
+    "reverse_info": {
+      "formatted_address": "广西壮族自治区北海市海城区驿马街道小海星教育金癸星园",
+      "province": "广西壮族自治区",
+      "city": "北海市",
+      "district": "海城区",
+      "township": "驿马街道",
+      "neighborhood": [],
+      "street": "深港路"
+    },
+    "around_pois_count": 10,
+    "around_pois_sample": [
+      {
+        "name": "金葵文化城",
+        "type": "购物服务;文化用品店;文化用品店|商务住宅;商务住宅相关;商务住宅相关",
+        "distance": "0",
+        "location": "109.125796,21.466047"
+      },
+      {
+        "name": "开元华康",
+        "type": "医疗保健服务;医药保健销售店;药房",
+        "distance": "12",
+        "location": "109.125675,21.466025"
+      },
+      {
+        "name": "六及美食(金癸星园店)",
+        "type": "餐饮服务;中餐厅;中餐厅",
+        "distance": "25",
+        "location": "109.125565,21.465981"
+      }
+    ]
+  },
+  {
+    "target_name": "向海丝路艺术酒店",
+    "name": "向海丝路艺术酒店(北海银滩国际客运港店)",
+    "address": "尊龙便捷酒店东北门西北160米",
+    "location": "109.137348,21.418216",
+    "pname": "广西壮族自治区",
+    "cityname": "北海市",
+    "adname": "银海区",
+    "type": "住宿服务;住宿服务相关;住宿服务相关",
+    "typecode": "100000",
+    "tel": "18278975331;18877938931",
+    "reverse_info": {
+      "formatted_address": "广西壮族自治区北海市银海区银滩镇向海丝路艺术酒店(北海银滩国际客运港店)海泰别墅区A区",
+      "province": "广西壮族自治区",
+      "city": "北海市",
+      "district": "银海区",
+      "township": "银滩镇",
+      "neighborhood": [],
+      "street": "银滩大道"
+    },
+    "around_pois_count": 10,
+    "around_pois_sample": [
+      {
+        "name": "心港超市(海泰别墅区店)",
+        "type": "购物服务;购物相关场所;购物相关场所",
+        "distance": "5",
+        "location": "109.137394,21.418242"
+      },
+      {
+        "name": "永凤特产超市(海泰别墅区店)",
+        "type": "购物服务;超级市场;超市",
+        "distance": "23",
+        "location": "109.137566,21.418257"
+      },
+      {
+        "name": "川湘缘海鲜美食",
+        "type": "餐饮服务;中餐厅;海鲜酒楼",
+        "distance": "46",
+        "location": "109.137175,21.418602"
+      }
+    ]
+  },
+  {
+    "target_name": "向海思路文化馆",
+    "name": "北海市向海丝路文化馆",
+    "address": "滨海路红帆步行街8-9号楼",
+    "location": "109.122171,21.486251",
+    "pname": "广西壮族自治区",
+    "cityname": "北海市",
+    "adname": "海城区",
+    "type": "科教文化服务;文化宫;文化宫",
+    "typecode": "140800",
+    "tel": [],
+    "reverse_info": {
+      "formatted_address": "广西壮族自治区北海市海城区中街街道北海市向海丝路文化馆万达苑",
+      "province": "广西壮族自治区",
+      "city": "北海市",
+      "district": "海城区",
+      "township": "中街街道",
+      "neighborhood": [],
+      "street": "珠海外街"
+    },
+    "around_pois_count": 10,
+    "around_pois_sample": [
+      {
+        "name": "哈哈社区海景小店",
+        "type": "餐饮服务;咖啡厅;咖啡厅",
+        "distance": "0",
+        "location": "109.122168,21.486251"
+      },
+      {
+        "name": "年年南珠文化",
+        "type": "购物服务;购物相关场所;购物相关场所",
+        "distance": "8",
+        "location": "109.122104,21.486302"
+      },
+      {
+        "name": "冯建秀小卖部(万达苑店)",
+        "type": "购物服务;便民商店/便利店;便民商店/便利店",
+        "distance": "10",
+        "location": "109.122271,21.486270"
+      }
+    ]
+  },
+  {
+    "target_name": "湛江安铺超鸡饭店",
+    "name": "湛江安铺超鸡饭店",
+    "address": "上海路87号",
+    "location": "109.151836,21.468995",
+    "pname": "广西壮族自治区",
+    "cityname": "北海市",
+    "adname": "海城区",
+    "type": "餐饮服务;餐饮相关场所;餐饮相关",
+    "typecode": "050000",
+    "tel": "15777911168",
+    "reverse_info": {
+      "formatted_address": "广西壮族自治区北海市海城区高德街道上海路87号",
+      "province": "广西壮族自治区",
+      "city": "北海市",
+      "district": "海城区",
+      "township": "高德街道",
+      "neighborhood": [],
+      "street": "上海路"
+    },
+    "around_pois_count": 10,
+    "around_pois_sample": [
+      {
+        "name": "湛江安铺超鸡饭店",
+        "type": "餐饮服务;餐饮相关场所;餐饮相关",
+        "distance": "0",
+        "location": "109.151836,21.468995"
+      },
+      {
+        "name": "景园饭店",
+        "type": "餐饮服务;快餐厅;快餐厅",
+        "distance": "0",
+        "location": "109.151836,21.468995"
+      },
+      {
+        "name": "仁辉家私城",
+        "type": "购物服务;家居建材市场;家具城",
+        "distance": "35",
+        "location": "109.151764,21.469311"
+      }
+    ]
+  }
+]

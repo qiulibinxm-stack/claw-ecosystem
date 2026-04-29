@@ -1,0 +1,23 @@
+{
+  "name": "github-trending-monitor",
+  "version": "1.0.0",
+  "description": "GitHub Trending自动吸收系统 - 五行团队技术雷达",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "analyze": "node -e \"const monitor = require('./index.js'); monitor.runFullAnalysis().then(r => console.log('分析完成')).catch(e => console.error('分析失败:', e))\"",
+    "report": "node -e \"const fs = require('fs'); const path = require('path'); const reportsDir = path.join(process.cwd(), 'reports', 'github-trending'); const files = fs.readdirSync(reportsDir).filter(f => f.endsWith('.json')).sort().reverse(); if (files.length > 0) { const latest = JSON.parse(fs.readFileSync(path.join(reportsDir, files[0]), 'utf8')); console.log('最新报告:', JSON.stringify(latest.recommendations, null, 2)); } else { console.log('暂无报告'); }\""
+  },
+  "keywords": [
+    "github",
+    "trending",
+    "monitoring",
+    "ai-agent",
+    "claude",
+    "five-elements",
+    "evolution"
+  ],
+  "author": "万能虾CEO",
+  "license": "MIT",
+  "dependencies": {}
+}

@@ -1,0 +1,65 @@
+{
+  "公历路径": {
+    "date": "2001-09-11 23:43（公历）",
+    "cnlunar_day": "戊寅",
+    "cnlunar_month": "丁酉",
+    "cnlunar_year": "辛巳",
+    "manual_day": "丁丑",
+    "manual_pos60": 13,
+    "days_from_anchor": 6433,
+    "hour_five_mice": "庚子",
+    "cnlunar_hour": "壬子",
+    "zodiac": "蛇"
+  },
+  "农历路径": {
+    "lunar": "2001年9月11日（农历）",
+    "solar": "2001-10-27",
+    "cnlunar_day": "甲子",
+    "cnlunar_month": "戊戌",
+    "cnlunar_year": "辛巳",
+    "manual_day": "癸亥",
+    "manual_pos60": 59,
+    "days_from_anchor": 6479,
+    "hour_five_mice": "壬子",
+    "cnlunar_hour": "甲子",
+    "zodiac": "蛇"
+  },
+  "anchor_checks": [
+    {
+      "date": "1984-01-31",
+      "calc": "甲子",
+      "expected": "甲子",
+      "match": true
+    },
+    {
+      "date": "1984-02-01",
+      "calc": "乙丑",
+      "expected": "乙丑",
+      "match": true
+    },
+    {
+      "date": "1984-02-02",
+      "calc": "丙寅",
+      "expected": "丙寅",
+      "match": true
+    },
+    {
+      "date": "1984-02-03",
+      "calc": "丁卯",
+      "expected": "丁卯",
+      "match": true
+    },
+    {
+      "date": "1984-02-04",
+      "calc": "戊辰",
+      "expected": "戊辰",
+      "match": true
+    },
+    {
+      "date": "1985-04-10",
+      "calc": "己卯",
+      "expected": "己卯",
+      "match": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "date": "2026-04-19",
+  "type": "daily",
+  "created": "2026-04-19T22:48:41.724368+08:00",
+  "archive": "2026-04-19-五行增量.tar.gz",
+  "archive_size_mb": 0.01,
+  "md5": "f7e78b896c3976699264839eeac25c1a",
+  "changed_files": 5,
+  "categories": {
+    "其他": 5
+  },
+  "size_by_category": {
+    "其他": "13.5KB"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "skills": {
+    "jianying": {
+      "name": "Jianying",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=jianying",
+      "source": "skillhub",
+      "version": "0.1.0"
+    },
+    "agent-browser": {
+      "name": "Agent Browser",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=agent-browser",
+      "source": "skillhub",
+      "version": "0.2.0"
+    },
+    "deep-strategy": {
+      "name": "Deep Strategy",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=deep-strategy",
+      "source": "skillhub",
+      "version": "0.1.0"
+    },
+    "marketing-mode": {
+      "name": "Marketing Mode",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=marketing-mode",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "content-factory": {
+      "name": "content-factory",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=content-factory",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "capability-evolver": {
+      "name": "Capability Evolver",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=capability-evolver",
+      "source": "skillhub",
+      "version": "1.31.0"
+    },
+    "agent-builder": {
+      "name": "Agent Builder",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=agent-builder",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "agency-agents": {
+      "name": "Agency Agents",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=agency-agents",
+      "source": "skillhub",
+      "version": "1.0.2"
+    },
+    "video-transcript-downloader": {
+      "name": "Video Transcript Downloader",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=video-transcript-downloader",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "agent-reach": {
+      "name": "Agent Reach",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=agent-reach",
+      "source": "skillhub",
+      "version": "1.1.0"
+    },
+    "model-router": {
+      "name": "Model Router",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=model-router",
+      "source": "skillhub",
+      "version": "1.1.0"
+    },
+    "ai-daily-briefing": {
+      "name": "AI Daily Briefing",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=ai-daily-briefing",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "skill-vetter": {
+      "name": "Skill Vetter",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=skill-vetter",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "news-summary": {
+      "name": "News Summary",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=news-summary",
+      "source": "skillhub",
+      "version": "1.0.1"
+    }
+  }
+}

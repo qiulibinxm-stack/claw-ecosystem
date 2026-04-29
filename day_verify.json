@@ -1,0 +1,109 @@
+{
+  "anchor": {
+    "date": "1984-01-31",
+    "cnlunar": "甲子",
+    "expected": "甲子"
+  },
+  "tests": [
+    {
+      "date": "1984-01-31",
+      "cnlunar": "甲子",
+      "expected": "甲子",
+      "manual": "甲子",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 0,
+      "pos60": 0
+    },
+    {
+      "date": "1984-02-01",
+      "cnlunar": "乙丑",
+      "expected": "乙丑",
+      "manual": "乙丑",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 1,
+      "pos60": 1
+    },
+    {
+      "date": "1984-02-02",
+      "cnlunar": "丙寅",
+      "expected": "丙寅",
+      "manual": "丙寅",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 2,
+      "pos60": 2
+    },
+    {
+      "date": "1984-02-03",
+      "cnlunar": "丁卯",
+      "expected": "丁卯",
+      "manual": "丁卯",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 3,
+      "pos60": 3
+    },
+    {
+      "date": "1984-02-04",
+      "cnlunar": "戊辰",
+      "expected": "戊辰",
+      "manual": "戊辰",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 4,
+      "pos60": 4
+    },
+    {
+      "date": "1985-02-04",
+      "cnlunar": "甲戌",
+      "expected": "乙丑",
+      "manual": "甲戌",
+      "match_cnl": false,
+      "match_manual": false,
+      "days_from_anchor": 370,
+      "pos60": 10
+    },
+    {
+      "date": "1985-04-10",
+      "cnlunar": "己卯",
+      "expected": "己卯",
+      "manual": "己卯",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 435,
+      "pos60": 15
+    },
+    {
+      "date": "2001-09-10",
+      "cnlunar": "丙子",
+      "expected": null,
+      "manual": "丙子",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 6432,
+      "pos60": 12
+    },
+    {
+      "date": "2001-09-11",
+      "cnlunar": "丁丑",
+      "expected": null,
+      "manual": "丁丑",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 6433,
+      "pos60": 13
+    },
+    {
+      "date": "2001-09-12",
+      "cnlunar": "戊寅",
+      "expected": null,
+      "manual": "戊寅",
+      "match_cnl": true,
+      "match_manual": true,
+      "days_from_anchor": 6434,
+      "pos60": 14
+    }
+  ]
+}

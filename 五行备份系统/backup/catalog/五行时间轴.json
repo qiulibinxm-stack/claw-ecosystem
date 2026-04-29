@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "entries": [
+    {
+      "date": "2026-04-19",
+      "type": "daily",
+      "description": "增量备份 (其他=5)",
+      "packages": [
+        "daily/2026-04-19-五行增量.tar.gz"
+      ],
+      "total_size_mb": 0.01,
+      "changed_files": 5,
+      "categories": {
+        "其他": 5
+      },
+      "created": "2026-04-19T22:48:41.725882+08:00"
+    }
+  ]
+}

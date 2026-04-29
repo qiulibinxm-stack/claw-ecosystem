@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦞 五行协作看板</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --accent: #A78BFA;
+    --accent-hover: #8B5CF6;
+    --accent-dim: rgba(167,139,250,0.1);
+    --accent-dim2: rgba(167,139,250,0.07);
+    --bg: #F8F7FF;
+    --surface: #FFFFFF;
+    --card: #FFFFFF;
+    --card-hover: #FAFAFE;
+    --border: #E8E4F5;
+    --border-bright: #D4C8FB;
+    --text: #1A1A2E;
+    --text2: #4A4A6A;
+    --text3: #9090B0;
+    --green: #10B981;
+    --green-dim: rgba(16,185,129,0.1);
+    --red: #EF4444;
+    --red-dim: rgba(239,68,68,0.1);
+    --yellow: #F59E0B;
+    --yellow-dim: rgba(245,158,11,0.1);
+    --blue: #3B82F6;
+    --shadow: 0 2px 16px rgba(167,139,250,0.08);
+    --shadow-hover: 0 8px 32px rgba(167,139,250,0.15);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --font: 'Noto Sans SC', 'Inter', -apple-system, sans-serif;
+  }
+
+  /* 深色主题 */
+  .dark {
+    --bg: #0A0A14;
+    --surface: #12121E;
+    --card: #1A1A2E;
+    --card-hover: #1F1F36;
+    --border: rgba(255,255,255,0.08);
+    --border-bright: rgba(167,139,250,0.3);
+    --text: #E2E4F8;
+    --text2: #9090C0;
+    --text3: #6060A0;
+    --accent-dim: rgba(167,139,250,0.15);
+    --accent-dim2: rgba(167,139,250,0.08);
+    --shadow: 0 2px 16px rgba(0,0,0,0.3);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.4);
+    --green-dim: rgba(16,185,129,0.15);
+    --red-dim: rgba(239,68,68,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background .3s, color .3s;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1.5px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.85);
+  }
+  .dark header { background: rgba(18,18,30,0.9); }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 17px; font-weight: 700; letter-spacing: -0.3px;
+    color: var(--text);
+  }
+  .logo-icon {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--accent), #C4B5FD);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #fff; font-weight: 800;
+    box-shadow: 0 4px 16px rgba(167,139,250,0.35);
+    flex-shrink: 0;
+  }
+  .logo span { color: var(--accent); }
+
+  .header-center { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text3); }
+  .header-right { display: flex; align-items: center; gap: 8px; }
+
+  .sync-pill {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; padding: 5px 12px;
+    border-radius: 20px; border: 1px solid var(--border);
+    color: var(--text3); background: var(--card);
+    cursor: default; transition: all .2s;
+  }
+  .sync-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
+  .sync-pill.syncing { color: var(--yellow); border-color: rgba(245,158,11,.3); }
+  .sync-pill.syncing .dot { background: var(--yellow); animation: blink 1.5s ease-in-out infinite; }
+  .sync-pill.connected { color: var(--green); border-color: rgba(16,185,129,.3); }
+  .sync-pill.connected .dot { background: var(--green); }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  .theme-btn {
+    font-size: 13px; padding: 6px 14px; border-radius: 20px;
+    border: 1.5px solid var(--border); background: transparent;
+    color: var(--text2); cursor: pointer; font-family: var(--font);
+    display: flex; align-items: center; gap: 5px; transition: all .2s;
+    font-weight: 500;
+  }
+  .theme-btn:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 1400px; margin: 0 auto; padding: 20px 24px 40px; }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--shadow); transition: all .2s;
+    position: relative; overflow: hidden;
+  }
+  .stat-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+  .stat-icon { font-size: 22px; flex-shrink: 0; }
+  .stat-val { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.1; }
+  .stat-label { font-size: 11px; color: var(--text3); margin-top: 3px; }
+  .stat-sm { font-size: 13px; color: var(--text3); font-weight: 400; }
+  .stat-accent { background: var(--accent-dim); border-color: var(--border-bright); }
+  .stat-accent .stat-val { color: var(--accent); }
+
+  /* ── TOKEN ROW ── */
+  .token-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;
+  }
+  .token-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: var(--shadow); transition: all .2s; cursor: pointer;
+  }
+  .token-card:hover { box-shadow: var(--shadow-hover); background: var(--card-hover); }
+  .token-card .t-icon { font-size: 22px; }
+  .token-card .t-body { flex: 1; }
+  .token-card .t-val { font-size: 22px; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
+  .token-card .t-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .token-card .t-bar {
+    height: 3px; background: var(--border); border-radius: 2px; margin-top: 8px; overflow: hidden;
+  }
+  .token-card .t-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent), #7C3AED);
+    border-radius: 2px; transition: width 1s ease; min-width: 2px;
+  }
+  .token-card .t-meta { font-size: 10px; color: var(--text3); margin-top: 4px; }
+  .token-refresh-btn {
+    font-size: 11px; padding: 6px 14px; border-radius: 20px;
+    border: 1.5px solid var(--border); background: transparent;
+    color: var(--text3); cursor: pointer; font-family: var(--font);
+    transition: all .2s; flex-shrink: 0;
+  }
+  .token-refresh-btn:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .token-refresh-btn.loading { opacity: .5; pointer-events: none; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 20px; }
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.2px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hbtn {
+    font-size: 12px; padding: 6px 16px; border-radius: 20px;
+    border: 1.5px solid var(--border); background: transparent;
+    color: var(--text2); cursor: pointer; font-family: var(--font);
+    display: flex; align-items: center; gap: 5px; transition: all .2s; font-weight: 500;
+  }
+  .hbtn:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .hbtn.accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .hbtn.accent:hover { background: var(--accent-hover); }
+
+  /* ── AGENTS GRID ── */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .agent-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px;
+    box-shadow: var(--shadow); transition: all .25s;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+  }
+  .agent-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--border-bright); }
+  .agent-card .glow {
+    position: absolute; top: -30px; right: -30px; width: 80px; height: 80px;
+    border-radius: 50%; opacity: 0.15; filter: blur(20px);
+  }
+
+  .agent-card.fire .glow { background: #FF7043; }
+  .agent-card.wood .glow { background: #66BB6A; }
+  .agent-card.water .glow { background: #42A5F5; }
+  .agent-card.earth .glow { background: #A1887F; }
+  .agent-card.metal .glow { background: #FFA726; }
+  .agent-card.me .glow { background: var(--accent); }
+
+  .agent-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .agent-icon { font-size: 26px; }
+  .agent-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 8px;
+    border-radius: 20px; background: var(--accent-dim);
+    color: var(--accent); letter-spacing: 0.5px;
+  }
+  .agent-card.fire .agent-badge { background: rgba(255,112,67,.1); color: #FF7043; }
+  .agent-card.wood .agent-badge { background: rgba(102,187,106,.1); color: #66BB6A; }
+  .agent-card.water .agent-badge { background: rgba(66,165,245,.1); color: #42A5F5; }
+  .agent-card.earth .agent-badge { background: rgba(161,136,127,.1); color: #A1887F; }
+  .agent-card.metal .agent-badge { background: rgba(255,167,38,.1); color: #FFA726; }
+
+  .agent-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .agent-role { font-size: 11px; color: var(--text3); margin-bottom: 8px; }
+  .agent-skills { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+  .skill-tag {
+    font-size: 9px; padding: 2px 7px; border-radius: 8px;
+    background: var(--accent-dim2); color: var(--accent);
+    border: 1px solid rgba(167,139,250,.15); font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px;
+  }
+
+  .agent-status { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .agent-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green); flex-shrink: 0;
+  }
+  .agent-dot.busy { background: var(--yellow); animation: blink 1.5s infinite; }
+  .agent-dot.offline { background: var(--text3); }
+  .agent-status-txt { font-size: 11px; color: var(--text2); }
+
+  .agent-task { font-size: 11px; color: var(--text3); margin-bottom: 10px; line-height: 1.4; min-height: 30px; }
+  .agent-task strong { color: var(--text2); }
+  .agent-task span { color: var(--text3); }
+
+  /* 任务进度条 */
+  .agent-progress { margin-bottom: 10px; }
+  .progress-bar {
+    height: 4px; background: var(--border); border-radius: 4px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 4px; transition: width 0.8s ease;
+    background: linear-gradient(90deg, var(--accent), #7C3AED);
+  }
+  .progress-fill.busy { background: linear-gradient(90deg, #F59E0B, #F97316); }
+  .progress-label { font-size: 10px; color: var(--text3); margin-top: 3px; display: flex; justify-content: space-between; }
+
+  .agent-btn {
+    width: 100%; font-size: 12px; padding: 7px;
+    border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--card); color: var(--text2);
+    cursor: pointer; font-family: var(--font); font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    transition: all .2s;
+  }
+  .agent-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+  .agent-card.fire .agent-btn:hover { border-color: #FF7043; color: #FF7043; background: rgba(255,112,67,.1); }
+  .agent-card.wood .agent-btn:hover { border-color: #66BB6A; color: #66BB6A; background: rgba(102,187,106,.1); }
+  .agent-card.water .agent-btn:hover { border-color: #42A5F5; color: #42A5F5; background: rgba(66,165,245,.1); }
+  .agent-card.earth .agent-btn:hover { border-color: #A1887F; color: #A1887F; background: rgba(161,136,127,.1); }
+  .agent-card.metal .agent-btn:hover { border-color: #FFA726; color: #FFA726; background: rgba(255,167,38,.1); }
+  .agent-card.me .agent-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+  /* ── TASK QUEUE ── */
+  .task-list { display: flex; flex-direction: column; gap: 6px; }
+  .task-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 12px 14px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--shadow); transition: all .2s;
+  }
+  .task-item:hover { box-shadow: var(--shadow-hover); }
+  .task-status-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .task-status-dot.pending { background: var(--text3); }
+  .task-status-dot.in-progress { background: var(--yellow); animation: blink 1.5s infinite; }
+  .task-status-dot.done { background: var(--green); }
+  .task-body { flex: 1; min-width: 0; }
+  .task-title { font-size: 13px; font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .task-meta { font-size: 10px; color: var(--text3); margin-top: 2px; display: flex; align-items: center; gap: 8px; }
+  .task-agent-tag {
+    font-size: 10px; padding: 1px 7px; border-radius: 8px;
+    background: var(--accent-dim); color: var(--accent);
+  }
+  .task-progress-wrap { width: 80px; flex-shrink: 0; }
+  .task-actions { display: flex; gap: 5px; flex-shrink: 0; }
+  .task-action-btn {
+    font-size: 10px; padding: 4px 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text3); cursor: pointer; font-family: var(--font);
+    transition: all .15s;
+  }
+  .task-action-btn:hover { background: var(--accent-dim); color: var(--accent); }
+  .task-empty {
+    text-align: center; padding: 30px; color: var(--text3); font-size: 13px;
+    background: var(--card); border: 1px dashed var(--border); border-radius: var(--radius);
+  }
+
+  /* ── DISCUSSION BOARD ── */
+  .discussion-board {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .disc-header {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--card-hover);
+  }
+  .disc-title { font-size: 14px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .disc-count { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: var(--accent-dim); color: var(--accent); }
+  .disc-body {
+    max-height: 360px; overflow-y: auto;
+    padding: 12px 16px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .disc-body::-webkit-scrollbar { width: 4px; }
+  .disc-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .disc-msg {
+    display: flex; align-items: flex-start; gap: 8px;
+    animation: fadeIn .3s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .disc-avatar {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .disc-msg.fire .disc-avatar { background: rgba(255,112,67,.15); color: #FF7043; }
+  .disc-msg.wood .disc-avatar { background: rgba(102,187,106,.15); color: #66BB6A; }
+  .disc-msg.water .disc-avatar { background: rgba(66,165,245,.15); color: #42A5F5; }
+  .disc-msg.earth .disc-avatar { background: rgba(161,136,127,.15); color: #A1887F; }
+  .disc-msg.metal .disc-avatar { background: rgba(255,167,38,.15); color: #FFA726; }
+  .disc-msg.me .disc-avatar { background: var(--accent-dim); color: var(--accent); }
+  .disc-msg.system .disc-avatar { background: var(--accent-dim); color: var(--accent); font-size: 10px; }
+  .disc-msg.system .disc-content { color: var(--text3); font-style: italic; }
+
+  .disc-content { flex: 1; }
+  .disc-sender { font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 2px; }
+  .disc-text { font-size: 12px; color: var(--text); line-height: 1.5; }
+  .disc-time { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .disc-empty { text-align: center; padding: 40px; color: var(--text3); font-size: 12px; }
+  .disc-empty-icon { font-size: 28px; margin-bottom: 6px; opacity: .5; }
+
+  /* ── SKILL GRID ── */
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 12px;
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    transition: all .2s;
+  }
+  .skill-card:hover { box-shadow: var(--shadow-hover); background: var(--card-hover); border-color: var(--border-bright); }
+  .skill-icon { font-size: 18px; flex-shrink: 0; }
+  .skill-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .skill-desc { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+  /* ── SUBDASH GRID ── */
+  .dash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .dash-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px;
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+    box-shadow: var(--shadow); transition: all .2s;
+  }
+  .dash-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); border-color: var(--border-bright); }
+  .dash-icon { font-size: 22px; flex-shrink: 0; }
+  .dash-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .dash-desc { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .dash-arrow { margin-left: auto; color: var(--text3); font-size: 14px; }
+
+  /* ── DISPATCH MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.4);
+    display: none; align-items: center; justify-content: center;
+    z-index: 1000; backdrop-filter: blur(4px);
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); width: 480px; max-width: 95vw;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    animation: modalIn .25s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(10px); } to { opacity: 1; transform: none; } }
+  .modal-header {
+    padding: 18px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .modal-title-icon { font-size: 18px; }
+  .modal-close {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text3); cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s; font-family: var(--font);
+  }
+  .modal-close:hover { background: var(--red-dim); color: var(--red); border-color: var(--red); }
+  .modal-body { padding: 18px 20px; }
+  .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 7px; display: block; }
+  .form-label span { font-weight: 400; color: var(--text3); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .form-input, .form-textarea, .form-select {
+    width: 100%; padding: 9px 12px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--card);
+    color: var(--text); font-family: var(--font); font-size: 13px;
+    transition: all .2s; outline: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+  .form-textarea { resize: vertical; min-height: 90px; }
+  .form-select { cursor: pointer; }
+
+  /* Agent picker */
+  .agent-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+  .agent-radio { display: none; }
+  .agent-radio-label {
+    font-size: 12px; padding: 6px 14px; border-radius: 20px;
+    border: 1.5px solid var(--border); cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+    background: var(--card); color: var(--text2);
+    transition: all .15s; user-select: none;
+  }
+  .agent-radio-label:hover { border-color: var(--accent); color: var(--accent); }
+  .agent-radio:checked + .agent-radio-label {
+    background: var(--accent); border-color: var(--accent); color: #fff;
+  }
+  .agent-radio:checked + .agent-radio-label.fire { background: #FF7043; border-color: #FF7043; }
+  .agent-radio:checked + .agent-radio-label.wood { background: #66BB6A; border-color: #66BB6A; }
+  .agent-radio:checked + .agent-radio-label.water { background: #42A5F5; border-color: #42A5F5; }
+  .agent-radio:checked + .agent-radio-label.earth { background: #A1887F; border-color: #A1887F; }
+  .agent-radio:checked + .agent-radio-label.metal { background: #FFA726; border-color: #FFA726; }
+
+  /* Priority picker */
+  .priority-picker { display: flex; gap: 6px; }
+  .priority-radio { display: none; }
+  .priority-label {
+    font-size: 11px; padding: 5px 12px; border-radius: 20px;
+    border: 1.5px solid var(--border); cursor: pointer;
+    background: var(--card); color: var(--text3);
+    transition: all .15s; user-select: none;
+  }
+  .priority-label:hover { border-color: var(--accent); color: var(--accent); }
+  .priority-radio:checked + .priority-label.normal { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+  .priority-radio:checked + .priority-label.important { background: var(--yellow-dim); border-color: var(--yellow); color: var(--yellow); }
+  .priority-radio:checked + .priority-label.urgent { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+
+  /* File upload */
+  .upload-zone {
+    border: 2px dashed var(--border); border-radius: var(--radius-sm);
+    padding: 14px; text-align: center; cursor: pointer;
+    transition: all .2s; background: var(--accent-dim2);
+    position: relative; margin-bottom: 8px;
+  }
+  .upload-zone:hover, .upload-zone.dragover { border-color: var(--accent); background: var(--accent-dim); }
+  .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-icon { font-size: 24px; display: block; margin-bottom: 4px; }
+  .upload-hint { font-size: 11px; color: var(--text3); line-height: 1.5; }
+  .upload-hint span { color: var(--accent); }
+  .file-list { display: flex; flex-wrap: wrap; gap: 5px; }
+  .file-chip {
+    display: flex; align-items: center; gap: 5px; padding: 4px 8px;
+    border-radius: 8px; border: 1px solid var(--border);
+    font-size: 10px; color: var(--text2); max-width: 180px;
+    background: var(--accent-dim2);
+  }
+  .file-chip .file-icon { font-size: 14px; flex-shrink: 0; }
+  .file-chip .file-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+  .file-chip .file-size { color: var(--text3); font-size: 9px; flex-shrink: 0; }
+  .file-chip .file-del { color: var(--text3); cursor: pointer; flex-shrink: 0; transition: all .1s; }
+  .file-chip .file-del:hover { color: var(--red); }
+  .file-chip.img-chip { background: rgba(124,58,237,.08); border-color: rgba(124,58,237,.2); }
+  .file-chip.video-chip { background: rgba(59,130,246,.08); border-color: rgba(59,130,246,.2); }
+  .file-chip.audio-chip { background: rgba(245,158,11,.08); border-color: rgba(245,158,11,.2); }
+  .file-chip .file-thumb { width: 20px; height: 20px; border-radius: 3px; object-fit: cover; flex-shrink: 0; }
+
+  .dispatch-result { margin-top: 12px; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 12px; display: none; }
+  .dispatch-result.show { display: block; }
+  .dispatch-result.success { background: var(--green-dim); border: 1px solid rgba(16,185,129,.3); color: var(--green); }
+  .dispatch-result.error { background: var(--red-dim); border: 1px solid rgba(239,68,68,.3); color: var(--red); }
+
+  /* Buttons */
+  .btn { font-size: 13px; padding: 9px 20px; border-radius: 20px; border: none; cursor: pointer; font-family: var(--font); font-weight: 600; transition: all .2s; }
+  .btn-ghost { background: transparent; border: 1.5px solid var(--border); color: var(--text2); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 4px 16px rgba(167,139,250,.3); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 10px 18px;
+    font-size: 13px; opacity: 0; transform: translateY(8px);
+    transition: all .25s; z-index: 9999; pointer-events: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,.15); max-width: 300px;
+  }
+  #toast.show { opacity: 1; transform: none; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+    .token-row { grid-template-columns: 1fr; }
+    .agents-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+<!-- ── HEADER ── -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🦞</div>
+    <div>五行协作看板</div>
+  </div>
+  <div class="header-center">
+    <span id="headerTime">--:--</span>
+    <div class="sync-pill" id="syncStatus">
+      <span class="dot"></span>
+      <span id="syncText">检查连接...</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
+      <span id="themeIcon">🌙</span> <span id="themeLabel">深色</span>
+    </button>
+    <button class="hbtn accent" onclick="openDispatchModal()" style="font-size:13px">
+      📨 派活
+    </button>
+  </div>
+</header>
+
+<div class="container">
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card stat-accent">
+      <span class="stat-icon">🦞</span>
+      <div class="stat-body">
+        <div class="stat-val" id="stat-total">0</div>
+        <div class="stat-label">五行团队成员</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">🔥</span>
+      <div class="stat-body">
+        <div class="stat-val" id="stat-active">0</div>
+        <div class="stat-label">正在执行任务</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">⏰</span>
+      <div class="stat-body">
+        <div class="stat-val">7</div>
+        <div class="stat-label">Cron 任务</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">📋</span>
+      <div class="stat-body">
+        <div class="stat-val" id="stat-pending">0</div>
+        <div class="stat-label">待处理</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">✅</span>
+      <div class="stat-body">
+        <div class="stat-val" id="stat-done">0</div>
+        <div class="stat-label">已完成</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKEN -->
+  <div class="token-row">
+    <div class="token-card" id="tokenInputCard" onclick="showTokenDetail('input')">
+      <span class="t-icon">📥</span>
+      <div class="t-body">
+        <div class="t-val" id="tokenInput">--</div>
+        <div class="t-label">Input Tokens</div>
+        <div class="t-bar"><div class="t-bar-fill" id="tokenInputBar" style="width:0%"></div></div>
+        <div class="t-meta" id="tokenInputMeta">点击刷新获取数据</div>
+      </div>
+      <button class="token-refresh-btn" id="tokenRefreshBtn" onclick="event.stopPropagation();refreshToken()">↻</button>
+    </div>
+    <div class="token-card" id="tokenOutputCard" onclick="showTokenDetail('output')">
+      <span class="t-icon">📤</span>
+      <div class="t-body">
+        <div class="t-val" id="tokenOutput">--</div>
+        <div class="t-label">Output Tokens</div>
+        <div class="t-bar"><div class="t-bar-fill" id="tokenOutputBar" style="width:0%"></div></div>
+        <div class="t-meta" id="tokenOutputMeta">点击刷新获取数据</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 五行团队 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">🔥 五行团队 <span style="font-size:11px;color:var(--text3);font-weight:400">(点击卡片派活)</span></div>
+    </div>
+    <div class="agents-grid" id="agentsGrid">
+      <!-- 动态渲染 -->
+    </div>
+  </div>
+
+  <!-- 讨论看板 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">💬 五行讨论板 <span class="disc-count" id="discCount">0</span></div>
+      <button class="hbtn" onclick="clearDiscussion()">🗑️ 清空</button>
+    </div>
+    <div class="discussion-board">
+      <div class="disc-body" id="discBody">
+        <div class="disc-empty">
+          <div class="disc-empty-icon">💬</div>
+          <div>派发任务后，五行的讨论将显示在这里</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 任务队列 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">📋 任务队列</div>
+      <button class="hbtn" onclick="renderTaskQueue()">🔄 刷新</button>
+    </div>
+    <div class="task-list" id="taskList">
+      <div class="task-empty">暂无任务，点点右上角「📨 派活」开始</div>
+    </div>
+  </div>
+
+  <!-- 技能快捷入口 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">⚡ 技能快捷入口</div>
+    </div>
+    <div class="skill-grid" id="skillGrid">
+      <!-- 动态渲染 -->
+    </div>
+  </div>
+
+  <!-- 子系统看板 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">🗂️ 子系统看板</div>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card" onclick="doAction('backup-dash')">
+        <span class="dash-icon">💾</span>
+        <div><div class="dash-name">备份看板</div><div class="dash-desc">增量备份 · 崩坏回滚</div></div>
+        <span class="dash-arrow">→</span>
+      </div>
+      <div class="dash-card" onclick="doAction('course-dash')">
+        <span class="dash-icon">📚</span>
+        <div><div class="dash-name">调研课看板</div><div class="dash-desc">8章16节 · 自动化</div></div>
+        <span class="dash-arrow">→</span>
+      </div>
+      <div class="dash-card" onclick="doAction('intelligence-dash')">
+        <span class="dash-icon">📡</span>
+        <div><div class="dash-name">情报看板</div><div class="dash-desc">五行开源情报 · 实时采集</div></div>
+        <span class="dash-arrow">→</span>
+      </div>
+      <div class="dash-card" onclick="doAction('knowledge-dash')">
+        <span class="dash-icon">🧠</span>
+        <div><div class="dash-name">知识库</div><div class="dash-desc">37条知识 · 持续积累</div></div>
+        <span class="dash-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DISPATCH MODAL ── -->
+<div class="modal-overlay" id="dispatchModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title"><span class="modal-title-icon">📨</span> 派发任务</div>
+      <button class="modal-close" onclick="closeDispatchModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">派给谁？</label>
+        <div class="agent-picker">
+          <input type="radio" name="target" value="fire" id="t-fire" class="agent-radio">
+          <label for="t-fire" class="agent-radio-label fire"><span>🔥</span>炎明曦</label>
+          <input type="radio" name="target" value="wood" id="t-wood" class="agent-radio">
+          <label for="t-wood" class="agent-radio-label wood"><span>🌳</span>林长风</label>
+          <input type="radio" name="target" value="water" id="t-water" class="agent-radio">
+          <label for="t-water" class="agent-radio-label water"><span>💧</span>程流云</label>
+          <input type="radio" name="target" value="earth" id="t-earth" class="agent-radio">
+          <label for="t-earth" class="agent-radio-label earth"><span>🏔️</span>安如山</label>
+          <input type="radio" name="target" value="metal" id="t-metal" class="agent-radio">
+          <label for="t-metal" class="agent-radio-label metal"><span>⚙️</span>金锐言</label>
+          <input type="radio" name="target" value="me" id="t-me" class="agent-radio" checked>
+          <label for="t-me" class="agent-radio-label"><span>🦞</span>万能虾</label>
+          <input type="radio" name="target" value="all" id="t-all" class="agent-radio">
+          <label for="t-all" class="agent-radio-label"><span>👥</span>全员广播</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">任务描述</label>
+        <textarea class="form-textarea" id="taskDesc" placeholder="描述一下要做什么..."></textarea>
+      </div>
+
+      <!-- 附件 -->
+      <div class="form-group">
+        <label class="form-label">📎 附件 <span>（可选）</span></label>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx,.txt,.mp3,.mp4,audio/*,video/*" onchange="handleFileSelect(this.files)">
+          <span class="upload-icon">📎</span>
+          <div class="upload-hint">点击或拖拽上传<br><span>图片 · PDF · 音视频</span></div>
+        </div>
+        <div class="file-list" id="fileList"></div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="form-label">截止时间</label>
+          <input type="datetime-local" class="form-input" id="taskDeadline">
+        </div>
+        <div>
+          <label class="form-label">紧急度</label>
+          <div class="priority-picker">
+            <input type="radio" name="priority" value="normal" id="p-normal" class="priority-radio" checked>
+            <label for="p-normal" class="priority-label normal">普通</label>
+            <input type="radio" name="priority" value="important" id="p-important" class="priority-radio">
+            <label for="p-important" class="priority-label important">重要</label>
+            <input type="radio" name="priority" value="urgent" id="p-urgent" class="priority-radio">
+            <label for="p-urgent" class="priority-label urgent">紧急</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="dispatch-result" id="dispatchResult"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDispatchModal()">取消</button>
+      <button class="btn btn-primary" id="dispatchSubmitBtn" onclick="submitDispatch()">✅ 确认派活</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════ */
+const AGENTS = [
+  { id:'me',   name:'万能虾', role:'创世者意志执行者', elem:'🦞', cls:'me',   skills:['五行协调','战略翻译'],   description:'CEO · 自主分派任务' },
+  { id:'fire', name:'炎明曦', role:'战略愿景官',       elem:'🔥', cls:'fire', skills:['news-summary','ai-daily-briefing','agent-reach'], description:'情报 · 晨间简报' },
+  { id:'wood', name:'林长风', role:'增长黑客',         elem:'🌳', cls:'wood', skills:['agent-reach','marketing-mode','model-router'], description:'增长 · 获客' },
+  { id:'water',name:'程流云', role:'技术架构师',       elem:'💧', cls:'water',skills:['model-router','skill-vetter','agent-builder'], description:'技术 · 架构' },
+  { id:'earth',name:'安如山', role:'运营总监',         elem:'🏔️', cls:'earth',skills:['ai-daily-briefing','agency-agents','skill-vetter'], description:'运营 · 调度' },
+  { id:'metal',name:'金锐言', role:'内容主笔',         elem:'⚙️', cls:'metal',skills:['frontend-ui-ux','content-factory','agent-reach'], description:'内容 · 创作' },
+];
+
+const SKILLS = [
+  { icon:'📰', name:'新闻摘要', desc:'聚合今日热点', url:'skill:news-summary' },
+  { icon:'🌅', name:'每日简报', desc:'晨间情报汇总', url:'skill:ai-daily-briefing' },
+  { icon:'🔍', name:'快速搜索', desc:'全网信息检索', url:'skill:online-search' },
+  { icon:'🎨', name:'内容工厂', desc:'批量内容生产', url:'skill:content-factory' },
+  { icon:'📊', name:'模型路由', desc:'智能模型分配', url:'skill:model-router' },
+  { icon:'🛡️', name:'安全扫描', desc:'Skill安全检查', url:'skill:skill-vetter' },
+  { icon:'🤖', name:'Agent编排', desc:'多Agent协作', url:'skill:agency-agents' },
+  { icon:'🧠', name:'知识检索', desc:'本地知识库RAG', url:'skill:find-skills' },
+  { icon:'🧩', name:'工具构建', desc:'MCP工具开发', url:'skill:mcp-builder' },
+  { icon:'🎬', name:'视频脚本', desc:'AI视频文案', url:'skill:video-script-gen' },
+];
+
+/* ═══════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const fmtNum = n => n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
+const now = () => new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Shanghai'});
+const today = () => new Date().toLocaleDateString('zh-CN',{month:'short',day:'numeric',timeZone:'Asia/Shanghai'});
+
+function showToast(msg, duration=3000) {
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+/* ═══════════════════════════════════════════
+   THEME
+═══════════════════════════════════════════ */
+const THEMES = { light: false, dark: true };
+function toggleTheme() {
+  const dark = document.body.classList.toggle('dark');
+  localStorage.setItem('wuxing-theme', dark ? 'dark' : 'light');
+  $('themeIcon').textContent = dark ? '☀️' : '🌙';
+  $('themeLabel').textContent = dark ? '浅色' : '深色';
+}
+(function(){
+  if(localStorage.getItem('wuxing-theme') === 'dark') {
+    document.body.classList.add('dark');
+    $('themeIcon').textContent = '☀️';
+    $('themeLabel').textContent = '浅色';
+  }
+})();
+
+/* ═══════════════════════════════════════════
+   TIME
+═══════════════════════════════════════════ */
+function updateTime() {
+  $('headerTime').textContent = `${today()} ${now()}`;
+}
+updateTime();
+setInterval(updateTime, 30000);
+
+/* ═══════════════════════════════════════════
+   RENDER AGENTS
+═══════════════════════════════════════════ */
+function renderAgents() {
+  const tasks = JSON.parse(localStorage.getItem('wuxing-tasks') || '[]');
+  const grid = $('agentsGrid');
+  grid.innerHTML = AGENTS.map(a => {
+    const aTasks = tasks.filter(t => (t.target === a.id || t.target === 'all') && t.status !== 'done');
+    const inProgress = aTasks.filter(t => t.status === 'in-progress');
+    const doneCount = tasks.filter(t => (t.target === a.id || t.target === 'all') && t.status === 'done').length;
+    const busy = inProgress.length > 0;
+    const progress = busy ? (inProgress[0].progress || 0) : 0;
+    const currentTask = busy ? inProgress[0] : null;
+    const taskText = busy ? currentTask.desc.slice(0, 25) + (currentTask.desc.length > 25 ? '...' : '') : '等待派活';
+
+    return `<div class="agent-card ${a.cls}" onclick="openDispatchModal('${a.id}')">
+      <div class="glow"></div>
+      <div class="agent-top">
+        <span class="agent-icon">${a.elem}</span>
+        <span class="agent-badge">${a.id === 'me' ? 'CEO' : ['🔥','🌳','💧','🏔️','⚙️'][AGENTS.findIndex(x=>x.id===a.id)-1] || a.id[0].toUpperCase()}</span>
+      </div>
+      <div class="agent-name">${a.name}</div>
+      <div class="agent-role">${a.role}</div>
+      <div class="agent-skills">${a.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}</div>
+      <div class="agent-status">
+        <div class="agent-dot ${busy?'busy':'ok'}"></div>
+        <span class="agent-status-txt">${busy?'执行中':'空闲'}</span>
+        ${doneCount > 0 ? `<span style="font-size:10px;color:var(--green);margin-left:4px">✓${doneCount}已完成</span>` : ''}
+      </div>
+      <div class="agent-task"><strong>任务：</strong><span>${taskText}</span></div>
+      ${busy ? `
+      <div class="agent-progress">
+        <div class="progress-bar"><div class="progress-fill busy" style="width:${progress}%"></div></div>
+        <div class="progress-label"><span>${currentTask.desc.slice(0,20)}...</span><span>${progress}%</span></div>
+      </div>` : ''}
+      <button class="agent-btn" onclick="event.stopPropagation();openDispatchModal('${a.id}')">
+        ${a.id === 'me' ? '🦞 派给万能虾' : '📨 派活'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════
+   RENDER SKILLS
+═══════════════════════════════════════════ */
+function renderSkills() {
+  $('skillGrid').innerHTML = SKILLS.map(s => `
+    <div class="skill-card" onclick="invokeSkill('${s.url}')">
+      <span class="skill-icon">${s.icon}</span>
+      <div><div class="skill-name">${s.name}</div><div class="skill-desc">${s.desc}</div></div>
+    </div>`).join('');
+}
+
+async function invokeSkill(url) {
+  if(url.startsWith('skill:')) {
+    showToast(`⚡ 触发技能：${url.slice(6)}`);
+    // 派活给万能虾执行
+    await fetch('/api/send', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message:`执行技能：${url.slice(6)}`, target:'fire' })
+    });
+  }
+}
+
+/* ═══════════════════════════════════════════
+   TASK QUEUE
+═══════════════════════════════════════════ */
+function renderTaskQueue() {
+  const tasks = JSON.parse(localStorage.getItem('wuxing-tasks') || '[]');
+  $('stat-pending').textContent = tasks.filter(t => t.status !== 'done').length;
+  $('stat-done').textContent = tasks.filter(t => t.status === 'done').length;
+  $('stat-active').textContent = tasks.filter(t => t.status === 'in-progress').length;
+  $('stat-total').textContent = AGENTS.length;
+
+  if(!tasks.length) {
+    $('taskList').innerHTML = '<div class="task-empty">暂无任务，点点右上角「📨 派活」开始</div>';
+    return;
+  }
+  $('taskList').innerHTML = tasks.slice(0,20).map(t => {
+    const cls = { pending:'pending', 'in-progress':'in-progress', done:'done' }[t.status];
+    const agent = AGENTS.find(a => a.id === t.target);
+    const dot = `<span class="task-status-dot ${cls}"></span>`;
+    const prioBadge = t.priority === 'urgent' ? '🔴' : t.priority === 'important' ? '🟡' : '';
+    const agentTag = agent ? `<span class="task-agent-tag">${agent.elem} ${agent.name}</span>` : '';
+    const progressBar = t.status === 'in-progress' ? `
+      <div class="task-progress-wrap"><div class="progress-bar"><div class="progress-fill busy" style="width:${t.progress||0}%"></div></div></div>` : '';
+    const actions = t.status === 'done' ? `<button class="task-action-btn" onclick="deleteTask('${t.id}')">🗑️</button>` :
+      t.status === 'in-progress' ? `<button class="task-action-btn" onclick="markDone('${t.id}')">✅</button>` : '';
+    return `<div class="task-item" id="task-${t.id}">
+      ${dot}
+      <div class="task-body">
+        <div class="task-title">${prioBadge} ${t.desc}</div>
+        <div class="task-meta">${agentTag}<span>${t.created}</span>${t.deadline?'<span>⏰'+t.deadline+'</span>':''}</div>
+      </div>
+      ${progressBar}
+      <div class="task-actions">${actions}</div>
+    </div>`;
+  }).join('');
+}
+
+function deleteTask(id) {
+  let tasks = JSON.parse(localStorage.getItem('wuxing-tasks') || '[]');
+  tasks = tasks.filter(t => t.id !== id);
+  localStorage.setItem('wuxing-tasks', JSON.stringify(tasks));
+  renderTaskQueue();
+  renderAgents();
+}
+
+function markDone(id) {
+  let tasks = JSON.parse(localStorage.getItem('wuxing-tasks') || '[]');
+  const t = tasks.find(x => x.id === id);
+  if(t) { t.status = 'done'; t.progress = 100; }
+  localStorage.setItem('wuxing-tasks', JSON.stringify(tasks));
+  renderTaskQueue();
+  renderAgents();
+  addDiscussion({ sender:'system', text:`✅ 任务「${t.desc.slice(0,15)}...」已完成`, elem:'✨' });
+}
+
+/* ═══════════════════════════════════════════
+   DISCUSSION BOARD
+═══════════════════════════════════════════ */
+const discussion = JSON.parse(localStorage.getItem('wuxing-disc') || '[]');
+
+function addDiscussion(msg) {
+  discussion.unshift({ ...msg, time: now() });
+  if(discussion.length > 100) discussion.pop();
+  localStorage.setItem('wuxing-disc', JSON.stringify(discussion));
+  renderDiscussion();
+}
+
+function renderDiscussion() {
+  $('discCount').textContent = discussion.length;
+  if(!discussion.length) {
+    $('discBody').innerHTML = '<div class="disc-empty"><div class="disc-empty-icon">💬</div><div>派发任务后，五行的讨论将显示在这里</div></div>';
+    return;
+  }
+  $('discBody').innerHTML = discussion.slice(0, 50).map(m => {
+    const agent = AGENTS.find(a => a.id === m.sender);
+    const cls = agent ? agent.cls : (m.sender === 'system' ? 'system' : 'me');
+    const avatar = agent ? agent.elem : (m.elem || '🦞');
+    const name = agent ? agent.name : (m.sender === 'system' ? '系统' : m.sender);
+    return `<div class="disc-msg ${cls}">
+      <div class="disc-avatar">${avatar}</div>
+      <div class="disc-content">
+        <div class="disc-sender">${name}</div>
+        <div class="disc-text">${m.text}</div>
+        <div class="disc-time">${m.time}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function clearDiscussion() {
+  discussion.length = 0;
+  localStorage.setItem('wuxing-disc', '[]');
+  renderDiscussion();
+  showToast('讨论记录已清空');
+}
+
+/* ═══════════════════════════════════════════
+   TOKEN STATS
+═══════════════════════════════════════════ */
+function showTokenDetail(type) {
+  const msgs = {
+    input: 'Input Token = 发给模型的提示词总token数，越高说明上下文越长',
+    output: 'Output Token = 模型生成的回复总token数'
+  };
+  showToast(msgs[type] || type);
+}
+
+async function refreshToken() {
+  const btn = $('tokenRefreshBtn');
+  btn.classList.add('loading'); btn.textContent = '⏳';
+  try {
+    const resp = await fetch('/api/token-usage');
+    const data = await resp.json();
+    const totalLimit = 500000;
+    const inPct = Math.min(100, (data.inputTokens / totalLimit) * 100).toFixed(1);
+    const outPct = Math.min(100, (data.outputTokens / totalLimit) * 100).toFixed(1);
+    $('tokenInput').textContent = fmtNum(data.inputTokens || 0);
+    $('tokenOutput').textContent = fmtNum(data.outputTokens || 0);
+    $('tokenInputBar').style.width = inPct + '%';
+    $('tokenOutputBar').style.width = outPct + '%';
+    $('tokenInputMeta').textContent = `↻ ${now()} · ${inPct}%日限额`;
+    $('tokenOutputMeta').textContent = `↻ ${now()} · ${outPct}%日限额`;
+    localStorage.setItem('wuxing-token', JSON.stringify(data));
+    showToast(`✅ Token数据已更新`);
+  } catch(e) {
+    showToast('❌ Token获取失败');
+  }
+  btn.classList.remove('loading'); btn.textContent = '↻';
+}
+
+/* ═══════════════════════════════════════════
+   QCLAW SYNC
+═══════════════════════════════════════════ */
+async function syncWithQClaw() {
+  updateSyncStatus('syncing', '同步中...');
+  try {
+    const resp = await fetch('/api/qclaw-status');
+    if(resp.ok) {
+      const data = await resp.json();
+      updateSyncStatus('connected', `${data.agentCount}个Agent在线`);
+      // 同步讨论（如果有来自QClaw的消息）
+      if(data.messages && data.messages.length) {
+        data.messages.forEach(m => addDiscussion(m));
+      }
+    } else {
+      updateSyncStatus('disconnected', '网关不可达');
+    }
+  } catch(e) {
+    updateSyncStatus('disconnected', '未连接');
+  }
+}
+
+function updateSyncStatus(status, detail) {
+  const el = $('syncStatus');
+  el.className = 'sync-pill ' + status;
+  const texts = { connected:'✓ 已连接QClaw', syncing:'↻ 同步中...', disconnected:'✕ 未连接', error:'! 连接异常' };
+  $('syncText').textContent = detail || texts[status];
+}
+
+setInterval(syncWithQClaw, 30000);
+setTimeout(syncWithQClaw, 2000);
+
+/* ═══════════════════════════════════════════
+   DISPATCH MODAL
+═══════════════════════════════════════════ */
+let currentTarget = 'me';
+
+function openDispatchModal(target) {
+  currentTarget = target || 'me';
+  const radios = document.querySelectorAll('name' in document ? '[name="target"]' : 'input[name="target"]');
+  document.querySelectorAll('input[name="target"]').forEach(r => r.checked = r.value === currentTarget);
+  $('dispatchModal').classList.add('show');
+  $('taskDesc').value = '';
+  $('dispatchResult').classList.remove('show');
+  uploadedFiles = [];
+  renderFileList();
+  $('taskDesc').focus();
+}
+
+function closeDispatchModal() {
+  $('dispatchModal').classList.remove('show');
+}
+
+async function submitDispatch() {
+  const target = document.querySelector('input[name="target"]:checked')?.value || currentTarget;
+  const desc = $('taskDesc').value.trim();
+  const priority = document.querySelector('input[name="priority"]:checked')?.value || 'normal';
+  const deadline = $('taskDeadline').value || '';
+  const agent = AGENTS.find(a => a.id === target);
+
+  if(!desc) { showToast('⚠️ 请填写任务描述'); return; }
+
+  const btn = $('dispatchSubmitBtn');
+  btn.disabled = true; btn.textContent = '⏳ 派发中...';
+
+  // 文件附件处理
+  let extraText = '';
+  if(uploadedFiles.length > 0) {
+    extraText = '\n\n【附件清单】' + uploadedFiles.map(f => {
+      const icon = f.type.startsWith('image/')?'🖼️':f.type.startsWith('video/')?'🎬':f.type.startsWith('audio/')?'🎵':'📄';
+      const size = f.size < 1048576 ? (f.size/1024).toFixed(1)+'K' : (f.size/1048576).toFixed(1)+'M';
+      return `${icon} ${f.name} (${size})`;
+    }).join('\n  ');
+  }
+
+  const fullMsg = extraText ? desc + extraText : desc;
+  const taskId = Date.now().toString();
+
+  // 写任务到localStorage
+  const tasks = JSON.parse(localStorage.getItem('wuxing-tasks') || '[]');
+  tasks.unshift({
+    id: taskId, target, desc, priority, deadline,
+    status: 'pending', progress: 0,
+    created: today() + ' ' + now(), updated: now()
+  });
+  localStorage.setItem('wuxing-tasks', JSON.stringify(tasks));
+
+  // 发到QClaw
+  let sent = false;
+  try {
+    const resp = await fetch('/api/send', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message: fullMsg, target, files: uploadedFiles.map(f=>({name:f.name,size:f.size,type:f.type})) })
+    });
+    const result = await resp.json();
+    sent = result.success;
+  } catch(e) { /* 降级到队列模式 */ }
+
+  // 更新任务状态 → 进行中
+  const taskList = JSON.parse(localStorage.getItem('wuxing-tasks') || '[]');
+  const t = taskList.find(x => x.id === taskId);
+  if(t) { t.status = 'in-progress'; t.progress = 5; }
+  localStorage.setItem('wuxing-tasks', JSON.stringify(taskList));
+
+  // 讨论板发言
+  const senderAgent = AGENTS.find(a => a.id === target);
+  if(senderAgent) {
+    addDiscussion({ sender: target, text: `📋 收到任务：${desc.slice(0,30)}${desc.length>30?'...':''}`, elem: senderAgent.elem });
+    if(target === 'me') {
+      // 万能虾自主分派
+      setTimeout(() => {
+        addDiscussion({ sender:'me', text:'🤔 分析任务...决定分派给团队成员执行', elem:'🦞' });
+        const subtasks = ['🔥 → 炎明曦（情报收集）', '🌳 → 林长风（增长策略）', '💧 → 程流云（技术方案）'];
+        subtasks.forEach((s, i) => {
+          setTimeout(() => addDiscussion({ sender:'system', text:s, elem:'→' }), (i+1)*1500);
+        });
+        setTimeout(() => addDiscussion({ sender:'me', text:'✅ 任务已分解并分派给五行团队，等待执行反馈...', elem:'🦞' }), 5000);
+      }, 2000);
+    }
+  }
+
+  $('dispatchResult').className = 'dispatch-result show success';
+  $('dispatchResult').textContent = sent ? `✅ 已派给${agent?.name || target}，任务执行中...` : `📝 已记录任务（QClaw离线模式）`;
+
+  btn.disabled = false; btn.textContent = '✅ 确认派活';
+
+  renderTaskQueue();
+  renderAgents();
+
+  setTimeout(closeDispatchModal, 1500);
+}
+
+/* ═══════════════════════════════════════════
+   FILE UPLOAD
+═══════════════════════════════════════════ */
+let uploadedFiles = [];
+
+function handleFileSelect(files) {
+  for(const f of files) addFile(f);
+  renderFileList();
+}
+
+function addFile(file) {
+  const id = Date.now() + Math.random();
+  const entry = { id, name: file.name, size: file.size, type: file.type, thumb: null, dataUrl: null };
+  if(file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = e => { entry.thumb = e.target.result; entry.dataUrl = e.target.result; renderFileList(); };
+    reader.readAsDataURL(file);
+  }
+  uploadedFiles.push(entry);
+}
+
+function removeFile(id) {
+  uploadedFiles = uploadedFiles.filter(f => f.id !== id);
+  renderFileList();
+}
+
+function renderFileList() {
+  const el = $('fileList');
+  if(!uploadedFiles.length) { el.innerHTML = ''; return; }
+  el.innerHTML = uploadedFiles.map(f => {
+    const size = f.size < 1024 ? f.size+'B' : f.size < 1048576 ? (f.size/1024).toFixed(1)+'K' : (f.size/1048576).toFixed(1)+'M';
+    const icon = f.type.startsWith('image/')?'🖼️':f.type.startsWith('video/')?'🎬':f.type.startsWith('audio/')?'🎵':'📄';
+    const cls = f.type.startsWith('image/')?'img-chip':f.type.startsWith('video/')?'video-chip':f.type.startsWith('audio/')?'audio-chip':'';
+    const thumb = f.thumb ? `<img src="${f.thumb}" class="file-thumb">` : `<span class="file-icon">${icon}</span>`;
+    return `<div class="file-chip ${cls}"><span class="file-icon">${thumb||icon}</span><span class="file-name">${f.name}</span><span class="file-size">${size}</span><span class="file-del" onclick="removeFile(${id})">✕</span></div>`;
+  }).join('');
+}
+
+// drag & drop
+const zone = $('uploadZone');
+if(zone) {
+  ['dragenter','dragover'].forEach(e => zone.addEventListener(e, ev => { ev.preventDefault(); zone.classList.add('dragover'); }));
+  ['dragleave','drop'].forEach(e => zone.addEventListener(e, ev => { ev.preventDefault(); zone.classList.remove('dragover'); }));
+  zone.addEventListener('drop', e => { if(e.dataTransfer.files.length) handleFileSelect(e.dataTransfer.files); });
+}
+
+/* ═══════════════════════════════════════════
+   ACTIONS
+═══════════════════════════════════════════ */
+function doAction(action) {
+  const map = {
+    'backup-dash':    {msg:'💾 打开备份看板'},
+    'course-dash':    {msg:'📚 打开调研课看板'},
+    'intelligence-dash':{msg:'📡 打开情报看板'},
+    'knowledge-dash': {msg:'🧠 打开知识库'},
+  };
+  const a = map[action];
+  if(a) showToast(a.msg);
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+renderAgents();
+renderSkills();
+renderTaskQueue();
+renderDiscussion();
+setTimeout(refreshToken, 3000);
+
+// ESC关闭弹窗
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDispatchModal(); });
+</script>
+</body>
+</html>

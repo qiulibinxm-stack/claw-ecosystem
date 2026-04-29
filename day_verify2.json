@@ -1,0 +1,112 @@
+[
+  {
+    "date": "1985-02-01",
+    "note": "1985-02-01（春节前）",
+    "year8": "甲子",
+    "month8": "丁丑",
+    "day8": "辛未",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "辛未",
+    "pos60": 7,
+    "days_from_anchor": 367
+  },
+  {
+    "date": "1985-02-02",
+    "note": "1985-02-02（春节前）",
+    "year8": "甲子",
+    "month8": "丁丑",
+    "day8": "壬申",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "壬申",
+    "pos60": 8,
+    "days_from_anchor": 368
+  },
+  {
+    "date": "1985-02-03",
+    "note": "1985-02-03（春节当天）",
+    "year8": "甲子",
+    "month8": "丁丑",
+    "day8": "癸酉",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "癸酉",
+    "pos60": 9,
+    "days_from_anchor": 369
+  },
+  {
+    "date": "1985-02-04",
+    "note": "1985-02-04（立春）",
+    "year8": "甲子",
+    "month8": "戊寅",
+    "day8": "甲戌",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "甲戌",
+    "pos60": 10,
+    "days_from_anchor": 370
+  },
+  {
+    "date": "1985-02-05",
+    "note": "1985-02-05",
+    "year8": "甲子",
+    "month8": "戊寅",
+    "day8": "乙亥",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "乙亥",
+    "pos60": 11,
+    "days_from_anchor": 371
+  },
+  {
+    "date": "1985-02-06",
+    "note": "1985-02-06",
+    "year8": "甲子",
+    "month8": "戊寅",
+    "day8": "丙子",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "丙子",
+    "pos60": 12,
+    "days_from_anchor": 372
+  },
+  {
+    "date": "1985-02-07",
+    "note": "1985-02-07",
+    "year8": "甲子",
+    "month8": "戊寅",
+    "day8": "丁丑",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "丁丑",
+    "pos60": 13,
+    "days_from_anchor": 373
+  },
+  {
+    "date": "1985-02-08",
+    "note": "1985-02-08",
+    "year8": "甲子",
+    "month8": "戊寅",
+    "day8": "戊寅",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "戊寅",
+    "pos60": 14,
+    "days_from_anchor": 374
+  },
+  {
+    "date": "1985-02-09",
+    "note": "1985-02-09",
+    "year8": "甲子",
+    "month8": "戊寅",
+    "day8": "己卯",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "己卯",
+    "pos60": 15,
+    "days_from_anchor": 375
+  },
+  {
+    "date": "1985-02-10",
+    "note": "1985-02-10（农历新年）",
+    "year8": "甲子",
+    "month8": "戊寅",
+    "day8": "庚辰",
+    "cnlunar_yr_anchor": "甲子",
+    "manual_day": "庚辰",
+    "pos60": 16,
+    "days_from_anchor": 376
+  }
+]

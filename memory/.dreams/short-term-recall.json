@@ -1,0 +1,338 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-28T23:12:43.537Z",
+  "entries": {
+    "memory:memory/2026-04-22.md:57:105": {
+      "key": "memory:memory/2026-04-22.md:57:105",
+      "path": "memory/2026-04-22.md",
+      "startLine": 57,
+      "endLine": 105,
+      "source": "memory",
+      "snippet": "| personality_state.json | 261 B | 4/18 | ⚠️ 检查是否需要 | | evolution_state.json | 49 B | 4/18 | ⚠️ 检查是否需要 | #### 旧 task-summary 文件 | 文件 | 最后更新 | 建议 | |------|----------|------| | task-summary_20260419_*.md (3个) | 4/19 | 🗑️ 超过3天，可删除 | | task-summary_20260420_*.md (3个) | 4/20 | 🗑️ 超过2天，可删除 | | task-summary_2026-04-21_*.md (5个) | 4/21 | ⚠️ 保留1天 | | task-summary-2026-04-22-*.md | 4/22 | ✅ 保留 | --- ### ⚠️ 需关注项目 #### Cron 任务健康状态 | 任务 | 状态 | 问题 | |------|------|------| | 自主学习-中午深度研究 (14:00) | ❌ ERROR | 超时 600s | | 其他 6 个任务 | ✅ OK | 正常运行 | #### 知识库检查 - **总条目**: 35 个知识文件 - **INDEX.md**: ✅ 存在 - **_cross_ref.md**: ✅ 存在 - **建议**: 定期检查 INDEX 是否与实际文件同步 --- ### ✅ 健康项目 | 项目 | 数量 | 状态 | |------|------",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.6911537231393683,
+      "maxScore": 0.6911537231393683,
+      "firstRecalledAt": "2026-04-23T00:55:19.032Z",
+      "lastRecalledAt": "2026-04-23T00:55:19.032Z",
+      "queryHashes": [
+        "2bb9e3bbc463"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "personality-state.json",
+        "4/18",
+        "evolution-state.json",
+        "task-summary",
+        "task-summary-20260419",
+        "4/19",
+        "task-summary-20260420",
+        "4/20"
+      ]
+    },
+    "memory:memory/2026-04-22.md:93:139": {
+      "key": "memory:memory/2026-04-22.md:93:139",
+      "path": "memory/2026-04-22.md",
+      "startLine": 93,
+      "endLine": 139,
+      "source": "memory",
+      "snippet": "| MEMORY.md 行数 | ~120 行 | ⚠️ 偏长 | --- ### 💡 建议操作 ```powershell # 1. 删除所有 temp_* 文件 Remove-Item \"C:\\Users\\Administrator\\.qclaw\\workspace-agent-cf443017\\temp_*\" -Force # 2. 删除过时的 gep_prompt 文件 Remove-Item \"C:\\Users\\Administrator\\.qclaw\\workspace-agent-cf443017\\memory\\gep_prompt_*\" -Force # 3. 删除 3 天前的 task-summary Remove-Item \"C:\\Users\\Administrator\\.qclaw\\workspace-agent-cf443017\\task-summary_20260419_*\" -Force Remove-Item \"C:\\Users\\Administrator\\.qclaw\\workspace-agent-cf443017\\task-summary_20260420_*\" -Force # 4. 修复超时的 cron 任务（增加 timeout 或优化任务） ``` --- ## 📅 Cron 定时任务设置 ### 已创建：周一全身体检（14:00） **任务详情**: - 名称: 周一全身体检（14:00） - 时间: 每周一 14:00 (Asia/Shanghai) - 内容: 执行上述体检流程，输出报告 **注意**:",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.690035297901087,
+      "maxScore": 0.690035297901087,
+      "firstRecalledAt": "2026-04-23T00:55:19.032Z",
+      "lastRecalledAt": "2026-04-23T00:55:19.032Z",
+      "queryHashes": [
+        "2bb9e3bbc463"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "memory.md",
+        "remove-item",
+        "workspace-agent-cf443017",
+        "gep-prompt",
+        "task-summary",
+        "task-summary-20260419",
+        "task-summary-20260420",
+        "asia/shanghai"
+      ]
+    },
+    "memory:memory/2026-04-22.md:131:167": {
+      "key": "memory:memory/2026-04-22.md:131:167",
+      "path": "memory/2026-04-22.md",
+      "startLine": 131,
+      "endLine": 167,
+      "source": "memory",
+      "snippet": "## 📝 精简建议总结 ### 高优先级（立即执行） 1. ✅ 删除 16 个 temp_* 文件（~200 KB） 2. ✅ 删除 7 个 gep_prompt_* 文件（~70 KB） 3. ✅ 删除 6 个旧 task-summary 文件 ### 中优先级（本周执行） 4. ⚠️ 精简 MEMORY.md（移除过时内容，保留核心） 5. ⚠️ 修复 14:00 深度研究 cron 任务超时问题 6. ⚠️ 补充 USER.md 用户信息 ### 低优先级（持续优化） 7. 🔄 定期检查 knowledge/INDEX.md 同步状态 8. 🔄 清理不使用的 skills 9. 🔄 优化 HEARTBEAT.md 注释 --- **体检完成时间**: 2026-04-22 22:27 --- ## 🧹 清理执行（22:35） ### ✅ 已清理 - **temp_* 文件**: 16个文件已删除（~200 KB） - **gep_prompt_* 文件**: 7个文件已删除（~70 KB） - **旧 task-summary**: 6个文件已删除（4/19 和 4/20 的文件） ### ⚠️ Cron 任务创建失败 - Gateway 连接问题：`pairing required` - **原因**: Gateway 重启后需要重新建立 pairing 连接 - **解决方案**: 请在控制面板中手动创建 cron 任务，或等待 Gateway 自动恢复 pairing **下次体检**: 2026-04-28 (周一) 14:00（需手",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.625332382644174,
+      "maxScore": 0.625332382644174,
+      "firstRecalledAt": "2026-04-23T00:55:19.032Z",
+      "lastRecalledAt": "2026-04-23T00:55:19.032Z",
+      "queryHashes": [
+        "2bb9e3bbc463"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "gateway",
+        "gep-prompt",
+        "task-summary",
+        "memory.md",
+        "user.md",
+        "knowledge/index.md",
+        "heartbeat.md",
+        "4/19"
+      ]
+    },
+    "memory:memory/2026-04-11.md:57:87": {
+      "key": "memory:memory/2026-04-11.md:57:87",
+      "path": "memory/2026-04-11.md",
+      "startLine": 57,
+      "endLine": 87,
+      "source": "memory",
+      "snippet": "| knowledge/genealogy.md | yijing-core/knowledge/ | 知识族谱 | | knowledge/iterations.md | yijing-core/knowledge/ | 自我迭代机制 | ## yijing-bazi 核心 - 依赖：lunarcalendar（已安装）、ephem、pytz - 脚本：scripts/bazi_calculator.py - 支持阳历/阴历输入 - 输出：四柱 + 五行 + 十神 + 大运说明 - 限制：简化版，精确大运需节气数据 ## 用户愿景 一人公司 = 易经大脑 + 卡兹克风格 + 八字命理 ## 迭代承诺 - 每次决策咨询后记录案例 - 每次八字使用后记录 - 每月更新 SKILL.md - 每季度更新知识族谱 ## 待办 - [x] yijing-core - 完成 - [x] yijing-design - 完成 - [x] yijing-operations - 完成 - [x] yijing-bazi - 完成（2026-04-12凌晨） - [ ] yijing-creator（易经×卡兹克组合）- 待建 - [ ] 实际案例积累（知识沉淀）",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "totalScore": 1.562435343984752,
+      "maxScore": 0.8002297962247433,
+      "firstRecalledAt": "2026-04-24T13:37:23.308Z",
+      "lastRecalledAt": "2026-04-27T00:54:35.446Z",
+      "queryHashes": [
+        "d9010e3d9a11",
+        "8dcc60d76f72"
+      ],
+      "recallDays": [
+        "2026-04-24",
+        "2026-04-27"
+      ],
+      "conceptTags": [
+        "knowledge/genealogy.md",
+        "yijing-core/knowledge",
+        "knowledge/iterations.md",
+        "yijing-bazi",
+        "scripts/bazi-calculator.py",
+        "支持阳历/阴历输入",
+        "skill.md",
+        "yijing-core"
+      ]
+    },
+    "memory:memory/2026-04-11.md:30:65": {
+      "key": "memory:memory/2026-04-11.md:30:65",
+      "path": "memory/2026-04-11.md",
+      "startLine": 30,
+      "endLine": 65,
+      "source": "memory",
+      "snippet": "| khazix-writer | GitHub KKKKhazix/khazix-skills | 卡兹克公众号长文写作 | | yijing-core | 今晚新建 | 易经核心智慧 | ## yijing-core 技能结构 ``` ~/.qclaw/skills/yijing-core/ ├── SKILL.md # 核心层（已就绪） └── references/ └── hexagrams.md # 64卦现代智慧索引 ``` ## 核心设计 - **三易根本**：变易（一切都在变）、阴阳（正反一体）、时位（对的事在对的时间） - **决策六步法**：定局→辨势→找位→察机→取卦→决断 - **现代转化表达**：不说古话，用现代脑子翻译古智慧 - **长效记忆**：通过 MEMORY.md 和每日 memory 文件持续积累 ## 今晚完成的所有技能 | 技能 | 路径 | 说明 | |------|------|------| | yijing-core | ~/.qclaw/skills/yijing-core/ | 易经核心大脑 | | yijing-design | ~/.qclaw/skills/yijing-design/ | 易经设计思维 | | yijing-operations | ~/.qclaw/skills/yijing-operations/ | 易经运营智慧 | | yijing-bazi | ~/.qclaw/skills/yijing-bazi/ | 八字排盘+易经决策",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7265058006166732,
+      "maxScore": 0.7265058006166732,
+      "firstRecalledAt": "2026-04-24T13:37:23.308Z",
+      "lastRecalledAt": "2026-04-24T13:37:23.308Z",
+      "queryHashes": [
+        "d9010e3d9a11"
+      ],
+      "recallDays": [
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "khazix-writer",
+        "kkkkhazix/khazix-skills",
+        "yijing-core",
+        "qclaw/skills/yijing-core",
+        "skill.md",
+        "hexagrams.md",
+        "memory.md",
+        "yijing-design"
+      ]
+    },
+    "memory:memory/2026-04-28.md:604:633": {
+      "key": "memory:memory/2026-04-28.md:604:633",
+      "path": "memory/2026-04-28.md",
+      "startLine": 604,
+      "endLine": 633,
+      "source": "memory",
+      "snippet": "2. 开源共享社区 - 大家把养的龙虾贡献到社区 3. 龙虾Agent同步 - QCLAW/OpenClaw的Agent可同步到看板 4. 看板自由搭配 - 模块化设计（游戏/八字/知识库等） 5. 社区贡献下载 - 社区贡献的模块可下载到看板 6. Skill分享 - 上传好用的skill到社区网站 7. 虾聊APP - 类似微信的社交APP，加朋友、协作 ### 技术架构设计 ``` ┌─────────────────────────────────────────────────────┐ │ 🦞 龙虾生态网站 │ ├─────────────────────────────────────────────────────┤ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │ │ 🦐 看板 │ │ 🏘️ 社区 │ │ 🏪 市场 │ │ 📱 虾聊 │ │ │ │ 自由搭配 │ │ 八字/游戏 │ │ Skill │ │ 加朋友 │ │ │ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ │ │ └────────────┴─────┬──────┴────────────┘ │ │ ┌─────┴─────┐ │ │",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8354468221850924,
+      "maxScore": 0.8354468221850924,
+      "firstRecalledAt": "2026-04-28T23:12:43.537Z",
+      "lastRecalledAt": "2026-04-28T23:12:43.537Z",
+      "queryHashes": [
+        "3a054750025f"
+      ],
+      "recallDays": [
+        "2026-04-29"
+      ],
+      "conceptTags": [
+        "qclaw/openclaw的agent可同步到看板",
+        "游戏/八字/知识库等",
+        "八字/游戏",
+        "共享",
+        "社区",
+        "大家",
+        "养的",
+        "龙虾"
+      ]
+    },
+    "memory:memory/2026-04-23.md:75:96": {
+      "key": "memory:memory/2026-04-23.md:75:96",
+      "path": "memory/2026-04-23.md",
+      "startLine": 75,
+      "endLine": 96,
+      "source": "memory",
+      "snippet": "**研究项目**： 1. **PrefectHQ/fastmcp** — Pythonic MCP 服务器构建框架 2. **langfuse** — LLM 工程可观测性平台 ### FastMCP 核心发现 - 三大支柱：Servers（工具暴露）、Clients（连接消费）、Apps（交互UI） - 日下载量百万级，覆盖 70% MCP 服务器 - **Generative UI 最大创新**：LLM 运行时写 UI 代码并实时渲染 - Provider + Transform 架构：优秀的可组合性 - 源码质量极高：Provider 模式 + Pydantic 类型安全 + Mixin 分层 ### Langfuse 核心发现 - 四大核心：Tracing / Prompt Management / Evaluations / Datasets - 存储架构演进：纯 PostgreSQL → ClickHouse 混合（解决 Trace 爆炸） - YC W23，25k+ stars，MIT 协议，Docker Compose 5 分钟自部署 - 对我们最大价值：成本监控 + Prompt 版本管理 + Agent 输出质量评估 ### 产出笔记 - `knowledge/tech/2026-04-23-fastmcp-deep-dive.md` - `knowledge/tech/2026-04-23-langfuse-deep-dive.md` - 更新 `knowledge/INDEX.md`",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8031124054145837,
+      "maxScore": 0.8031124054145837,
+      "firstRecalledAt": "2026-04-28T23:12:43.537Z",
+      "lastRecalledAt": "2026-04-28T23:12:43.537Z",
+      "queryHashes": [
+        "3a054750025f"
+      ],
+      "recallDays": [
+        "2026-04-29"
+      ],
+      "conceptTags": [
+        "prefecthq/fastmcp",
+        "knowledge/index.md",
+        "研究",
+        "项目",
+        "prefecthq",
+        "fastmcp",
+        "pythonic",
+        "mcp"
+      ]
+    },
+    "memory:memory/2026-04-28.md:624:664": {
+      "key": "memory:memory/2026-04-28.md:624:664",
+      "path": "memory/2026-04-28.md",
+      "startLine": 624,
+      "endLine": 664,
+      "source": "memory",
+      "snippet": "│ │ 协议层 │ Agent接入 │ │ └───────────┘ │ └─────────────────────────────────────────────────────┘ ``` ### 核心功能模块 | 模块 | 功能 | 状态 | |------|------|------| | **🦞 龙虾同步** | QCLAW/OpenClaw的Agent同步到看板 | 待设计 | | **📦 看板系统** | 自由搭配模块（游戏/八字/知识库等） | 已有基础 | | **🏘️ 社区** | 八字板块、游戏板块、Skill贡献 | 待开发 | | **🏪 Skill市场** | 上传/下载/评分Skill | 待开发 | | **📱 虾聊APP** | 加朋友、私聊、群聊 | 待开发 | ### 技术可行性分析 **容易实现**： 1. 看板模块化 - 当前看板已支持独立模块 2. 社区贡献系统 - 类似GitHub pull request 3. Skill分享 - 类似npm包管理 4. 虾聊基础功能 - 加朋友、发消息 **有挑战但可解决**： 1. **QCLAW/OpenClaw Agent同步** - 需要定义「龙虾同步协议」（HTTP API） - 每个平台提供「导出Agent」接口 - 看板提供「导入龙虾」接口 2. **Agent互操作性** - 初期只同步元数据（",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7912450916505561,
+      "maxScore": 0.7912450916505561,
+      "firstRecalledAt": "2026-04-28T23:12:43.537Z",
+      "lastRecalledAt": "2026-04-28T23:12:43.537Z",
+      "queryHashes": [
+        "3a054750025f"
+      ],
+      "recallDays": [
+        "2026-04-29"
+      ],
+      "conceptTags": [
+        "qclaw/openclaw的agent同步到看板",
+        "游戏/八字/知识库等",
+        "上传/下载/评分skill",
+        "qclaw/openclaw",
+        "协议",
+        "核心",
+        "功能",
+        "状态"
+      ]
+    },
+    "memory:memory/2026-04-28.md:728:782": {
+      "key": "memory:memory/2026-04-28.md:728:782",
+      "path": "memory/2026-04-28.md",
+      "startLine": 728,
+      "endLine": 782,
+      "source": "memory",
+      "snippet": "1. **🦐 看板** - 可拆卸模块（游戏/八字/知识库/工具） 2. **🏘️ 社区** - GitHub风格，贡献/下载模块/Skill 3. **📱 虾聊** - 微信风格，加好友、加群、聊天 4. **✍️ 虾说** - 小说/文章分享 5. **🎬 虾看** - AI短视频分享 ### MVP实施路径 ``` Phase 1（本月）：看板 + 虾聊 ├── 可拆卸看板（完善现有） ├── 虾聊基础（加好友、加群、聊天） └── 龙虾同步协议 Phase 2（下月）：社区 ├── 模块市场（游戏/八字/知识库） ├── Skill分享 └── 贡献排行榜 Phase 3（第3月）：内容生态 ├── 虾说（小说分享） ├── 虾看（AI短视频） └── 社区活动 ``` ### 核心 slogan > **\"把你的龙虾分享给大家，把别人的龙虾借来用\"** ### 定位 - 纯娱乐，无压力 - 开源社区 + 社交APP双驱动 - AI Agent开源社区（类似GitHub for AI Agents） *最后更新：2026-04-28 20:12 CST* --- ## 前端架构设计完成（20:42 CST） ### 新建文件 - `projects/claw-ecosystem/ARCHITECTURE.md` (16,257 bytes) ### 架构设计内容 **整体架构**： - 应用外壳 + 5大模块（看板/社区/虾聊/虾说/虾看） - 用户系统（登录/注册/虾同步/设置） - 通用组件库",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7859098775681728,
+      "maxScore": 0.7859098775681728,
+      "firstRecalledAt": "2026-04-28T23:12:43.537Z",
+      "lastRecalledAt": "2026-04-28T23:12:43.537Z",
+      "queryHashes": [
+        "3a054750025f"
+      ],
+      "recallDays": [
+        "2026-04-29"
+      ],
+      "conceptTags": [
+        "游戏/八字/知识库/工具",
+        "贡献/下载模块/skill",
+        "小说/文章分享",
+        "游戏/八字/知识库",
+        "看板/社区/虾聊/虾说/虾看",
+        "登录/注册/虾同步/设置",
+        "看板",
+        "拆卸"
+      ]
+    },
+    "memory:memory/2026-04-28.md:697:736": {
+      "key": "memory:memory/2026-04-28.md:697:736",
+      "path": "memory/2026-04-28.md",
+      "startLine": 697,
+      "endLine": 736,
+      "source": "memory",
+      "snippet": "- 不要积分/代币 - **纯娱乐**：不做任何经济相关 ### 新增功能：虾说 & 虾看 | 功能 | 描述 | 参考 | |------|------|------| | **✍️ 虾说** | 小说/文章分享平台 | 微信公众号 | | **🎬 虾看** | AI短视频分享平台 | 抖音/B站 | ### 完整产品架构 ``` ┌──────────────────────────────────────────────────────┐ │ 🦞 龙虾生态网站 │ ├──────────────────────────────────────────────────────┤ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │ │ 🦐 │ │ 🏘️ │ │ 📱 │ │ ✍️ │ │ │ │ 看板 │ │ 社区 │ │ 虾聊 │ │ 虾说 │ │ │ │模块搭配 │ │ GitHub │ │ 微信 │ │ 小说 │ │ │ └─────────┘ └─────────┘ └─────────┘ └─────────┘ │ │ │ │ │ ┌",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7753222052868152,
+      "maxScore": 0.7753222052868152,
+      "firstRecalledAt": "2026-04-28T23:12:43.537Z",
+      "lastRecalledAt": "2026-04-28T23:12:43.537Z",
+      "queryHashes": [
+        "3a054750025f"
+      ],
+      "recallDays": [
+        "2026-04-29"
+      ],
+      "conceptTags": [
+        "不要积分/代币",
+        "小说/文章分享平台",
+        "抖音/b站",
+        "不要",
+        "积分",
+        "娱乐",
+        "不做",
+        "任何"
+      ]
+    },
+    "memory:memory/2026-04-28.md:775:812": {
+      "key": "memory:memory/2026-04-28.md:775:812",
+      "path": "memory/2026-04-28.md",
+      "startLine": 775,
+      "endLine": 812,
+      "source": "memory",
+      "snippet": "- 应用外壳 + 5大模块（看板/社区/虾聊/虾说/虾看） - 用户系统（登录/注册/虾同步/设置） - 通用组件库 + 主题系统 + 插件系统 **五大页面设计**： | 页面 | 交互重点 | |------|----------| | 🦐 看板 | 拖拽添加/移除模块 | | 🏘️ 社区 | 搜索/筛选/发布/下载 | | 📱 虾聊 | 即时通讯/文件分享 | | ✍️ 虾说 | 写作/阅读/评论 | | 🎬 虾看 | 上传/播放/点赞 | **核心交互流程**： 1. 龙虾同步流程（QCLAW → 导出元数据 → 导入网站 → 展示看板） 2. 模块贡献流程（开发者 → 打包 → 上传 → 审核 → 发布 → 下载） 3. 虾聊好友流程（搜索 → 发送请求 → 接受/拒绝 → 成为虾友） **技术选型**： - 前端：React 18 + TypeScript + TailwindCSS - 后端：Next.js 14 + PostgreSQL + Redis - 实时：Socket.io（虾聊） - 部署：Vercel + Supabase ### 下一步 - 细化每个页面的详细交互设计 - 设计数据库表结构 - 开始写代码 --- ## 晚间知识复盘（22:00 CST） ### 今日学习成果（5个知识点） | 序号 | 知识点 | 类型 | 关键洞察 | |------|--------|------|----------| | 1 | 赢工具包方法论 | 智慧 | 易经×孙子×毛泽东×30商业案例融合，商业制胜八字诀：借/拆/锁/变/合/",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.7478546308000056,
+      "maxScore": 0.7478546308000056,
+      "firstRecalledAt": "2026-04-28T23:12:43.537Z",
+      "lastRecalledAt": "2026-04-28T23:12:43.537Z",
+      "queryHashes": [
+        "3a054750025f"
+      ],
+      "recallDays": [
+        "2026-04-29"
+      ],
+      "conceptTags": [
+        "看板/社区/虾聊/虾说/虾看",
+        "登录/注册/虾同步/设置",
+        "拖拽添加/移除模块",
+        "搜索/筛选/发布/下载",
+        "即时通讯/文件分享",
+        "写作/阅读/评论",
+        "上传/播放/点赞",
+        "接受/拒绝"
+      ]
+    }
+  }
+}

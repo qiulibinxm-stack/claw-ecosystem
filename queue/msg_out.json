@@ -1,0 +1,166 @@
+[
+  {
+    "id": "20260423133917862491",
+    "target": "me",
+    "message": "解读一下这个视频内容\n\n【附件清单】🎬 01.mp4 (1.9M)",
+    "files": [
+      {
+        "name": "01.mp4",
+        "size": 2019038,
+        "type": "video/mp4"
+      }
+    ],
+    "createdAt": "2026-04-23T13:39:17.862491",
+    "status": "pending"
+  },
+  {
+    "id": "20260423134103214735",
+    "target": "fire",
+    "message": "执行技能：ai-daily-briefing",
+    "files": [],
+    "createdAt": "2026-04-23T13:41:03.214735",
+    "status": "pending"
+  },
+  {
+    "id": "20260423134104080114",
+    "target": "fire",
+    "message": "执行技能：online-search",
+    "files": [],
+    "createdAt": "2026-04-23T13:41:04.080114",
+    "status": "pending"
+  },
+  {
+    "id": "20260423134106285767",
+    "target": "fire",
+    "message": "执行技能：content-factory",
+    "files": [],
+    "createdAt": "2026-04-23T13:41:06.285767",
+    "status": "pending"
+  },
+  {
+    "id": "20260423134107135395",
+    "target": "fire",
+    "message": "执行技能：video-script-gen",
+    "files": [],
+    "createdAt": "2026-04-23T13:41:07.135395",
+    "status": "pending"
+  },
+  {
+    "id": "20260423150303283731",
+    "target": "me",
+    "message": "解析这个视频的内容\n\n【附件清单】🎬 01.mp4 (1.9M)",
+    "files": [
+      {
+        "name": "01.mp4",
+        "size": 2019038,
+        "type": "video/mp4"
+      }
+    ],
+    "createdAt": "2026-04-23T15:03:03.283731",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194308400111",
+    "target": "fire",
+    "message": "执行技能：skill-vetter",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:08.400111",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194312524453",
+    "target": "fire",
+    "message": "执行技能：model-router",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:12.524453",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194312841282",
+    "target": "fire",
+    "message": "执行技能：skill-vetter",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:12.841282",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194314137540",
+    "target": "fire",
+    "message": "执行技能：content-factory",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:14.137540",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194315456156",
+    "target": "fire",
+    "message": "执行技能：online-search",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:15.456156",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194316164256",
+    "target": "fire",
+    "message": "执行技能：ai-daily-briefing",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:16.164256",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194316985973",
+    "target": "fire",
+    "message": "执行技能：news-summary",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:16.985973",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194317232890",
+    "target": "fire",
+    "message": "执行技能：mcp-builder",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:17.232890",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194317482954",
+    "target": "fire",
+    "message": "执行技能：video-script-gen",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:17.482954",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194322136611",
+    "target": "fire",
+    "message": "执行技能：video-script-gen",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:22.136611",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194322400220",
+    "target": "fire",
+    "message": "执行技能：mcp-builder",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:22.400220",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194322762203",
+    "target": "fire",
+    "message": "执行技能：mcp-builder",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:22.762203",
+    "status": "pending"
+  },
+  {
+    "id": "20260423194323381244",
+    "target": "fire",
+    "message": "执行技能：news-summary",
+    "files": [],
+    "createdAt": "2026-04-23T19:43:23.381244",
+    "status": "pending"
+  }
+]

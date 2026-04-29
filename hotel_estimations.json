@@ -1,0 +1,88 @@
+{
+  "苏福比画廊酒店": {
+    "basic_info": {
+      "id": "B0FFFCOKUR",
+      "name": "苏福比画廊酒店(北海银滩度假区店)",
+      "type": "住宿服务;宾馆酒店;三星级宾馆",
+      "typecode": "100104",
+      "address": "银滩中路恬园假日别墅区L区1、2、7、8号",
+      "location": "109.138752,21.414151",
+      "tel": "0779-3801777;0779-3808777",
+      "business_area": "",
+      "rating": "4.6",
+      "cost": []
+    },
+    "estimated_metrics": {
+      "hotel_type": "画廊酒店",
+      "room_count_est": 74,
+      "avg_daily_rate_est": 222,
+      "occupancy_rate_est": 0.424,
+      "revpar_est": 94,
+      "daily_revenue_est": 6960,
+      "monthly_revenue_est": 208794,
+      "annual_revenue_est": 4509955,
+      "daily_cost_est": 3480,
+      "daily_profit_est": 3480,
+      "monthly_profit_est": 104397,
+      "annual_profit_est": 2254978,
+      "profit_margin_est": 50.0,
+      "investment_estimate": 9019911,
+      "roi_est": 25.0,
+      "env_score": 1.357,
+      "comp_factor": 0.425,
+      "season_factor": 1.8,
+      "competitor_count": 15,
+      "confidence_level": "中高",
+      "data_sources": [
+        "高德地图API",
+        "行业基准数据",
+        "环境分析模型",
+        "竞争分析模型"
+      ]
+    },
+    "estimation_time": "2026-04-20 15:03:50"
+  },
+  "北海银滩吉海度假酒店": {
+    "basic_info": {
+      "id": "B0LUNL86G4",
+      "name": "北海银滩吉海度假酒店(国际客运港店)",
+      "type": "住宿服务;宾馆酒店;宾馆酒店",
+      "typecode": "100100",
+      "address": "广东路恒利旅游度假中心国会区19型3号别墅",
+      "location": "109.143135,21.417517",
+      "tel": "13367796329;18607796639",
+      "business_area": "",
+      "rating": "4.8",
+      "cost": []
+    },
+    "estimated_metrics": {
+      "hotel_type": "度假酒店",
+      "room_count_est": 93,
+      "avg_daily_rate_est": 200,
+      "occupancy_rate_est": 0.405,
+      "revpar_est": 81,
+      "daily_revenue_est": 7532,
+      "monthly_revenue_est": 225964,
+      "annual_revenue_est": 4880830,
+      "daily_cost_est": 3917,
+      "daily_profit_est": 3615,
+      "monthly_profit_est": 108463,
+      "annual_profit_est": 2342798,
+      "profit_margin_est": 48.0,
+      "investment_estimate": 9761660,
+      "roi_est": 24.0,
+      "env_score": 1.335,
+      "comp_factor": 0.425,
+      "season_factor": 1.8,
+      "competitor_count": 15,
+      "confidence_level": "中高",
+      "data_sources": [
+        "高德地图API",
+        "行业基准数据",
+        "环境分析模型",
+        "竞争分析模型"
+      ]
+    },
+    "estimation_time": "2026-04-20 15:03:50"
+  }
+}

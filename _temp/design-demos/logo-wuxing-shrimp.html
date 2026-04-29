@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五行虾 Logo 概念测试 · 3 Variations</title>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #0D0D12;
+    color: #f0f0f0;
+    min-height: 100vh;
+    padding: 48px 32px;
+  }
+  .page-title {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .page-subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 48px;
+  }
+  .grid {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #1A1A24;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 40px 32px 32px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  }
+  .card-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+  .logo-area {
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+  }
+  .features {
+    width: 100%;
+    font-size: 13px;
+    line-height: 2;
+    color: rgba(255,255,255,0.6);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 16px;
+  }
+  .features strong { color: rgba(255,255,255,0.85); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState } = React;
+
+// ====== 五行色系 ======
+const WUXING = {
+  fire:   '#E8543A', // 火红
+  wood:   '#4CAF50', // 木绿
+  water:  '#3B82F6', // 水蓝
+  metal:  '#F5C542', // 金黄
+  earth:  '#8D6E63', // 土棕
+};
+
+// ====== Concept A: 五行环绕虾（Mascot Central）======
+function ConceptA() {
+  return (
+    <div className="card">
+      <div className="card-label">Concept A</div>
+      <div className="card-title" style={{color: WUXING.fire}}>五行环绕 · 虾神降世</div>
+      <div className="logo-area">
+        <svg width="220" height="220" viewBox="0 0 220 220">
+          {/* 五行圆环 */}
+          <circle cx="110" cy="110" r="100" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
+          {[
+            {angle: 0,       color: WUXING.fire},
+            {angle: 72,      color: WUXING.wood},
+            {angle: 144,     color: WUXING.water},
+            {angle: 216,     color: WUXING.metal},
+            {angle: 288,     color: WUXING.earth},
+          ].map(({angle, color}, i) => {
+            const rad = angle * Math.PI / 180;
+            const x = 110 + 85 * Math.cos(rad - Math.PI/2);
+            const y = 110 + 85 * Math.sin(rad - Math.PI/2);
+            return (
+              <g key={i}>
+                <circle cx={x} cy={y} r="14" fill={color} opacity="0.85">
+                  <animate attributeName="r" values="14;17;14" dur="3s" repeatCount="indefinite" begin={`${i*0.6}s`}/>
+                </circle>
+                <text x={x} y={y+4} textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700" fontFamily="sans-serif">
+                  {['火','木','水','金','土'][i]}
+                </text>
+              </g>
+            );
+          })}
+          {/* 中心虾 - 简化萌版 */}
+          <g transform="translate(110,108)">
+            {/* 虾身 */}
+            <ellipse cx="0" cy="0" rx="22" ry="36" fill="#FF6B4A" opacity="0.92"/>
+            {/* 虾头 */}
+            <circle cx="0" cy="-28" r="16" fill="#FF8A6A"/>
+            {/* 眼睛 */}
+            <circle cx="-6" cy="-32" r="3" fill="#fff"/>
+            <circle cx="6" cy="-32" r="3" fill="#fff"/>
+            <circle cx="-6" cy="-32" r="1.5" fill="#1a1a24"/>
+            <circle cx="6" cy="-32" r="1.5" fill="#1a1a24"/>
+            {/* 虾须 */}
+            <line x1="-8" y1="-40" x2="-18" y2="-50" stroke="#FF6B4A" strokeWidth="1.5" strokeLinecap="round"/>
+            <line x1="8" y1="-40" x2="18" y2="-50" stroke="#FF6B4A" strokeWidth="1.5" strokeLinecap="round"/>
+            {/* 虾尾 */}
+            <path d="M-10,32 Q0,44 10,32" fill="none" stroke="#FF6B4A" strokeWidth="2" strokeLinecap="round"/>
+            {/* 虾腿 */}
+            {[-12, 0, 12].map((dy, i) => (
+              <line key={i} x1="-18" y1={dy} x2="-26" y2={dy+4} stroke="#FF6B4A" strokeWidth="1.5" strokeLinecap="round"/>
+            ))}
+            {[-12, 0, 12].map((dy, i) => (
+              <line key={i} x1="18" y1={dy} x2="26" y2={dy+4} stroke="#FF6B4A" strokeWidth="1.5" strokeLinecap="round"/>
+            ))}
+          </g>
+          {/* 外圈装饰 */}
+          <circle cx="110" cy="110" r="105" fill="none" stroke="url(#glowA)" strokeWidth="2" opacity="0.5"/>
+          <defs>
+            <radialGradient id="glowA">
+              <stop offset="0%" stopColor={WUXING.fire} stopOpacity="0.6"/>
+              <stop offset="100%" stopColor={WUXING.fire} stopOpacity="0"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+      <div className="features">
+        <div><strong>风格：</strong>萌趣IP + 五行圆环</div>
+        <div><strong>核心：</strong>虾神居中，五行环绕加持</div>
+        <div><strong>适用：</strong>课程吉祥物 / 社媒头像</div>
+        <div><strong>动效：</strong>五行球呼吸脉动</div>
+      </div>
+    </div>
+  );
+}
+
+// ====== Concept B: 五行色带虾（Minimal Line）======
+function ConceptB() {
+  return (
+    <div className="card">
+      <div className="card-label">Concept B</div>
+      <div className="card-title" style={{color: WUXING.water}}>五行色带 · 极简线条</div>
+      <div className="logo-area">
+        <svg width="220" height="220" viewBox="0 0 220 220">
+          {/* 五行色彩条 */}
+          {[
+            {y: 30, color: WUXING.fire,  w: 180},
+            {y: 62, color: WUXING.wood,  w: 160},
+            {y: 94, color: WUXING.water, w: 200},
+            {y: 126, color: WUXING.metal, w: 155},
+            {y: 158, color: WUXING.earth, w: 175},
+          ].map(({y, color, w}, i) => (
+            <rect key={i} x={(220-w)/2} y={y} width={w} height="22" rx="11" fill={color} opacity="0.8">
+              <animate attributeName="width" values={`${w};${w+10};${w}`} dur="4s" repeatCount="indefinite" begin={`${i*0.8}s`}/>
+            </rect>
+          ))}
+          {/* 中心虾 - 线条风格 */}
+          <g transform="translate(110,195)" strokeLinecap="round" strokeWidth="2.5">
+            {/* 虾身曲线 */}
+            <path d="M0,-90 Q15,-70 10,-45 Q5,-20 0,0 Q-5,20 -8,40" fill="none" stroke="#fff" opacity="0.9"/>
+            <path d="M0,-90 Q-15,-70 -10,-45 Q-5,-20 0,0 Q5,20 8,40" fill="none" stroke="#fff" opacity="0.9"/>
+            {/* 虾头 */}
+            <circle cx="0" cy="-92" r="10" fill="none" stroke="#fff" strokeWidth="2" opacity="0.9"/>
+            {/* 眼睛 */}
+            <circle cx="-4" cy="-94" r="2" fill="#fff"/>
+            <circle cx="4" cy="-94" r="2" fill="#fff"/>
+            {/* 虾须 */}
+            <line x1="-6" y1="-100" x2="-14" y2="-108" stroke="#fff" strokeWidth="1.5"/>
+            <line x1="6" y1="-100" x2="14" y2="-108" stroke="#fff" strokeWidth="1.5"/>
+            {/* 虾尾 */}
+            <path d="M-6,40 Q0,50 6,40" fill="none" stroke="#fff" strokeWidth="2"/>
+            {/* 文字：万能虾 */}
+            <text x="0" y="68" textAnchor="middle" fill="#fff" fontSize="18" fontWeight="700" fontFamily="'PingFang SC','Microsoft YaHei',sans-serif">
+              万能虾
+            </text>
+          </g>
+        </svg>
+      </div>
+      <div className="features">
+        <div><strong>风格：</strong>极简线条 + 五行色带</div>
+        <div><strong>核心：</strong>水彩笔触感，五行底色支撑</div>
+        <div><strong>适用：</strong>App图标 / 文档页眉</div>
+        <div><strong>动效：</strong>色带呼吸伸缩</div>
+      </div>
+    </div>
+  );
+}
+
+// ====== Concept C: 卦象五行虾（BaGua Fusion）======
+function ConceptC() {
+  return (
+    <div className="card">
+      <div className="card-label">Concept C</div>
+      <div className="card-title" style={{color: WUXING.metal}}>卦象五行 · 创世之印</div>
+      <div className="logo-area">
+        <svg width="220" height="220" viewBox="0 0 220 220">
+          {/* 外八卦圆 */}
+          <circle cx="110" cy="110" r="98" fill="none" stroke="rgba(245,197,66,0.35)" strokeWidth="1.5"/>
+          {/* 八卦符号位置 - 简化为8个点 */}
+          {[0,45,90,135,180,225,270,315].map((angle, i) => {
+            const rad = angle * Math.PI / 180;
+            const x = 110 + 88 * Math.cos(rad);
+            const y = 110 + 88 * Math.sin(rad);
+            return (
+              <circle key={i} cx={x} cy={y} r="3" fill={WUXING.metal} opacity="0.6">
+                <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" begin={`${i*0.375}s`}/>
+              </circle>
+            );
+          })}
+          {/* 五行内圆 */}
+          <circle cx="110" cy="110" r="55" fill="rgba(26,26,36,0.8)" stroke={WUXING.metal} strokeWidth="1.5"/>
+          {/* 五行分区色 */}
+          {[
+            {start: 0, end: 72, color: WUXING.fire+'30'},
+            {start: 72, end: 144, color: WUXING.wood+'30'},
+            {start: 144, end: 216, color: WUXING.water+'30'},
+            {start: 216, end: 288, color: WUXING.metal+'30'},
+            {start: 288, end: 360, color: WUXING.earth+'30'},
+          ].map(({start, end, color}, i) => (
+            <path key={i}
+              d={`M110,110 L110,55 A55,55 0 0,1 ${110+55*Math.cos(end*Math.PI/180)},${110-55*Math.sin(end*Math.PI/180)} Z`}
+              fill={color}
+              transform={`rotate(${start},110,110)`}
+            />
+          ))}
+          {/* 中心虾 - 印章风格 */}
+          <g transform="translate(110,108)">
+            <rect x="-22" y="-34" width="44" height="48" rx="4" fill="none" stroke="#fff" strokeWidth="1.5" opacity="0.8"/>
+            {/* 虾 - 印章简化 */}
+            <path d="M0,-20 Q10,-15 8,-5 Q6,5 0,12 Q-6,5 -8,-5 Q-10,-15 0,-20Z" fill="#fff" opacity="0.9"/>
+            <line x1="-6" y1="-22" x2="-12" y2="-28" stroke="#fff" strokeWidth="1.2"/>
+            <line x1="6" y1="-22" x2="12" y2="-28" stroke="#fff" strokeWidth="1.2"/>
+            <circle cx="-3" cy="-18" r="1.5" fill="#1a1a24"/>
+            <circle cx="3" cy="-18" r="1.5" fill="#1a1a24"/>
+            {/* 底部文字 */}
+            <text x="0" y="30" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="600" fontFamily="'PingFang SC','Microsoft YaHei',sans-serif">
+              万能虾
+            </text>
+          </g>
+          {/* 外围文字 */}
+          <text x="110" y="18" textAnchor="middle" fill={WUXING.metal} fontSize="10" letterSpacing="0.3em" fontFamily="sans-serif" opacity="0.6">
+            创 世 者
+          </text>
+        </svg>
+      </div>
+      <div className="features">
+        <div><strong>风格：</strong>易经卦象 + 印章美学</div>
+        <div><strong>核心：</strong>八卦外环，五行分区，虾印居中</div>
+        <div><strong>适用：</strong>品牌主Logo / 课程封面章</div>
+        <div><strong>动效：</strong>八卦点 sequentially 亮起</div>
+      </div>
+    </div>
+  );
+}
+
+// ====== Main App ======
+function App() {
+  return (
+    <>
+      <div className="page-title">🦐 五行虾 Logo 概念测试</div>
+      <div className="page-subtitle">万能虾 · 创世者品牌 · 三种差异化方向供选</div>
+      <div className="grid">
+        <ConceptA />
+        <ConceptB />
+        <ConceptC />
+      </div>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
