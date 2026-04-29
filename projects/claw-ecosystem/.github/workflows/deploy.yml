@@ -29,22 +29,23 @@ jobs:
       - name: Validate paths exist
         run: |
           echo "=== Checking required files ==="
-          test -f index.html && echo "✅ index.html found" || (echo "❌ index.html NOT found" && exit 1)
-          test -d agents && echo "✅ agents/ found" || (echo "❌ agents/ NOT found" && exit 1)
-          test -d assets && echo "✅ assets/ found" || (echo "❌ assets/ NOT found" && exit 1)
+          test -f projects/claw-ecosystem/docs/index.html && echo "OK index.html found" || (echo "FAIL index.html NOT found" && exit 1)
+          test -d projects/claw-ecosystem/docs/agents && echo "OK agents/ found" || (echo "FAIL agents/ NOT found" && exit 1)
+          test -d projects/claw-ecosystem/docs/assets && echo "OK assets/ found" || (echo "FAIL assets/ NOT found" && exit 1)
+          echo "=== All paths validated ==="
 
-      - name: Scan for sensitive data (安全扫描)
+      - name: Scan for sensitive data
         run: |
-          echo "=== 敏感数据扫描 ==="
+          echo "=== Sensitive data scan ==="
           FOUND=0
-          for f in $(find . -name "*.json" -o -name "*.md" 2>/dev/null | grep -v node_modules); do
+          for f in $(find projects/claw-ecosystem/docs -name "*.json" -o -name "*.md" 2>/dev/null | grep -v node_modules); do
             if grep -iq "api.key\|secret\|password\|token" "$f" 2>/dev/null; then
-              echo "⚠️  Warning: $f contains potential sensitive data"
+              echo "WARN: $f contains potential sensitive data"
               FOUND=1
             fi
           done
           if [ $FOUND -eq 0 ]; then
-            echo "✅ No sensitive data detected"
+            echo "OK: No sensitive data detected"
           fi
 
       - name: Setup Pages
@@ -53,28 +54,25 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/
-          # 只上传必需的静态文件，排除 node_modules 和 .git
+          path: projects/claw-ecosystem/docs/
           include: |
             "index.html"
             "design-prototype.html"
             "agents/"
             "assets/"
             "public/"
+            ".nojekyll"
           exclude: |
             "node_modules/"
-            ".git/"
             "src/"
             "*.config.*"
             "package*.json"
             "tsconfig*.json"
             ".eslint*"
-            ".github/"
-            "README.md"
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
       - name: Output URL
-        run: echo "🚀 Deployed to ${{ steps.deployment.outputs.page_url }}"
+        run: echo "DEPLOYED to ${{ steps.deployment.outputs.page_url }}"
