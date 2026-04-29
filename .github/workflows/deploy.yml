@@ -1,0 +1,54 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/claw-ecosystem/docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            projects/claw-ecosystem/docs/
+
+      - name: Validate paths exist
+        run: |
+          echo "=== Checking required files ==="
+          test -f projects/claw-ecosystem/docs/index.html && echo "OK index.html found" || (echo "FAIL index.html NOT found" && exit 1)
+          test -d projects/claw-ecosystem/docs/agents && echo "OK agents/ found" || (echo "FAIL agents/ NOT found" && exit 1)
+          test -d projects/claw-ecosystem/docs/assets && echo "OK assets/ found" || (echo "FAIL assets/ NOT found" && exit 1)
+          echo "=== All paths validated ==="
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: projects/claw-ecosystem/docs/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Output URL
+        run: echo "DEPLOYED to ${{ steps.deployment.outputs.page_url }}"
