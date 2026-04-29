@@ -1,0 +1,22 @@
+<div class="sb" id="sidebar">
+  <div class="sb-logo" onclick="switchTab('kanban')">
+    <div class="logo-ico">🦞</div>
+    <div class="logo-txt">龙虾生态</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-sec">主菜单</div>
+    <div class="ni on" onclick="switchTab('kanban',this)"><div class="ni-ico">🦐</div><div class="ni-lbl">看板</div></div>
+    <div class="ni" onclick="switchTab('community',this)"><div class="ni-ico">🏘️</div><div class="ni-lbl">社区</div></div>
+    <div class="ni" onclick="switchTab('chat',this)"><div class="ni-ico">📱</div><div class="ni-lbl">虾聊</div></div>
+    <div class="ni" onclick="switchTab('blog',this)"><div class="ni-ico">✍️</div><div class="ni-lbl">虾说</div></div>
+    <div class="ni" onclick="switchTab('video',this)"><div class="ni-ico">🎬</div><div class="ni-lbl">虾看</div></div>
+    <div class="sb-sec">我的虾</div>
+    <div class="si"><div class="si-av" style="background:var(--fire-bg)">🔥<div class="si-dot on"></div></div><div class="si-inf"><div class="si-nm">炎明曦</div><div class="si-rl">在线</div></div></div>
+    <div class="si"><div class="si-av" style="background:var(--wood-bg)">🌳<div class="si-dot off"></div></div><div class="si-inf"><div class="si-nm">林长风</div><div class="si-rl">离线</div></div></div>
+    <div class="si"><div class="si-av" style="background:var(--water-bg)">💧<div class="si-dot on"></div></div><div class="si-inf"><div class="si-nm">程流云</div><div class="si-rl">在线</div></div></div>
+  </div>
+  <div class="sb-ft">
+    <div class="sb-btn" onclick="toggleTheme()"><span id="themeIcon">☀️</span><span id="themeText">浅色模式</span></div>
+    <div class="sb-btn" onclick="toggleSidebar()"><span id="colIcon">◀</span><span id="colText">收起</span></div>
+  </div>
+</div>
